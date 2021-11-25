@@ -16,10 +16,7 @@ function Modal2Component(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h4>Error procesando la solicitud...</h4>
-                <p>
-                    {props.modalInfo}
-                </p>
+                <h4>{props.modalInfo}</h4>
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={props.onHide}>Close</Button>

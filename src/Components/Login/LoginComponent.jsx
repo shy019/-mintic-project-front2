@@ -21,14 +21,6 @@ export default function LoginComponent(props) {
         return usuario.length > 0 && password.length > 0;
     }
 
-    if (passwordRef && passwordRef.current) {
-        passwordRef.current.addEventListener("keypress", function (event) {
-            if (event.key == "Enter") {
-                handleSubmit();
-            }
-        })
-    }
-
     function handleSubmit(event) {
         event.preventDefault();
         getUserMain({
@@ -41,7 +33,7 @@ export default function LoginComponent(props) {
             setUserLogger(localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {});
         }).catch((error) => {
             setOpenModalInfo(true);
-            setModalInfo(error.status)
+            setModalInfo(error.response.data.message);
         });
     }
 
@@ -69,7 +61,7 @@ export default function LoginComponent(props) {
                 </div>
 
                 <div class="form-floating">
-                    <Form.Group size="lg" controlId="password" ref={password => passwordRef.current = password}>
+                    <Form.Group size="lg" controlId="password">
                         <Form.Label>Password</Form.Label>
                         <Form.Control
                             type="password"
