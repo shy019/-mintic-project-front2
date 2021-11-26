@@ -10,6 +10,8 @@ function AppProvider(props) {
     const [modalInfo, setModalInfo] = React.useState("");
     const [userLogged, setUserLogger] = React.useState({});
 
+   
+
     useEffect(() => {
         if (localStorage.getItem("user") && Object.entries(localStorage.getItem("user")).length > 0) {
             setUserLogger(JSON.parse(localStorage.getItem("user")));

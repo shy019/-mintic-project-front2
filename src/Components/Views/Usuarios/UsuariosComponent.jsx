@@ -1,6 +1,35 @@
-import React, { Component } from 'react'
+import React, { useState } from "react";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import './UsuariosComponent.css'
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { UserContext } from "../../../Providers/UserProvider";
 
 function UsuariosComponent(props) {
+    const {
+        cedula,
+        setCedula,
+        usuario,
+        setUsuario,
+        nombre,
+        setNombre,
+        contraseña,
+        setContraseña,
+        email,
+        setEmail,
+        rol,
+        setRol,
+        validateSearch,
+        validateCreate,
+        validateDelete,
+        validateUpdate,
+        searchNewUser,
+        deleteNewUser,
+        saveNewUser,
+        updateNewUser,
+    } = React.useContext(UserContext);
+
     return (
         <React.Fragment>
             <main className="mb-4">
@@ -8,94 +37,84 @@ function UsuariosComponent(props) {
                     <div className="row gx-4 gx-lg-5 justify-content-center">
                         <div className="col-md-10 col-lg-8 col-xl-7">
                             <div className="my-5">
-                                <form id="usersForm" data-sb-form-api-token="API_TOKEN">
-                                    <div className="form-floating">
-                                        <input className="form-control" id="cedula" type="text" placeholder="Ingresa tu cedula..."
-                                            data-sb-validations="required" />
-                                        <label for="name">Cédula</label>
-                                        <div className="invalid-feedback" data-sb-feedback="cedula:required">Una Cedula es
-                                            requerida.</div>
-                                        <div className="invalid-feedback" data-sb-feedback="cedula:password">No es una Cedula
-                                            valida.</div>
-                                    </div>
-                                    <div className="form-floating">
-                                        <input className="form-control" id="username" type="text"
-                                            placeholder="Ingresa tu usuario..." data-sb-validations="required,password" />
-                                        <label for="usuario">Usuario</label>
-                                        <div className="invalid-feedback" data-sb-feedback="usuario:required">Usuario requerido.
-                                        </div>
-                                        <div className="invalid-feedback" data-sb-feedback="usuario:password">No es un usuario
-                                            valido.</div>
-                                    </div>
-                                    <div className="form-floating">
-                                        <input className="form-control" id="name" type="text"
-                                            placeholder="Ingresa tu Nombre Completo..."
-                                            data-sb-validations="required,password" />
-                                        <label for="nombreCompleto">Nombre Completo</label>
-                                        <div className="invalid-feedback" data-sb-feedback="nombreCompleto:required">Un Nombre es
-                                            requerido.</div>
-                                        <div className="invalid-feedback" data-sb-feedback="nombreCompleto:password">No es un Nombre
-                                            valido.</div>
-                                    </div>
-                                    <div className="form-floating">
-                                        <input className="form-control" id="password" type="password"
-                                            placeholder="Ingresa tu contraseña..." data-sb-validations="required,password" />
-                                        <label for="password">Contraseña</label>
-                                        <div className="invalid-feedback" data-sb-feedback="password:required">Una contraseña es
-                                            requerida.</div>
-                                        <div className="invalid-feedback" data-sb-feedback="password:password">No es una contraseña
-                                            valida.</div>
-                                    </div>
-                                    <div className="form-floating">
-                                        <input className="form-control" id="email" type="email"
-                                            placeholder="Ingresa tu Correo Electrónico..."
-                                            data-sb-validations="required,password" />
-                                        <label for="email">Correo Electrónico</label>
-                                        <div className="invalid-feedback" data-sb-feedback="email:required">Un email es requerido.
-                                        </div>
-                                        <div className="invalid-feedback" data-sb-feedback="email:password">No es un email valido.
-                                        </div>
-                                    </div>
-                                </form>
-
+                                <Form>
+                                    <Form.Group className="mb-3" controlId="cedula">
+                                        <Form.Label>Cedula</Form.Label>
+                                        <Form.Control
+                                            autoFocus
+                                            placeholder="Ingrese la cedula"
+                                            type="text"
+                                            value={cedula}
+                                            onChange={(e) => setCedula(e.target.value)}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group controlId="usuario" className="mb-3" >
+                                        <Form.Label>Usuario</Form.Label>
+                                        <Form.Control
+                                            placeholder="Ingrese el usuario"
+                                            type="text"
+                                            value={usuario}
+                                            onChange={(e) => setUsuario(e.target.value)}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group controlId="nombre" className="mb-3" >
+                                        <Form.Label>Nombre Completo</Form.Label>
+                                        <Form.Control
+                                            placeholder="Ingrese el Nombre Completo"
+                                            type="text"
+                                            value={nombre}
+                                            onChange={(e) => setNombre(e.target.value)}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group controlId="contraseña" className="mb-3" >
+                                        <Form.Label>Contraseña</Form.Label>
+                                        <Form.Control
+                                            placeholder="Ingrese la contraseña"
+                                            type="password"
+                                            value={contraseña}
+                                            onChange={(e) => setContraseña(e.target.value)}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group controlId="email" className="mb-3" >
+                                        <Form.Label>Correo Electrónico</Form.Label>
+                                        <Form.Control
+                                            placeholder="Ingrese el email"
+                                            type="email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3" controlId="rol">
+                                        <Form.Label>Rol</Form.Label>
+                                        <Form.Select aria-label="Default select example" value={rol} onChange={(e) => setRol(e.target.value)}>
+                                            <option>Ingrese un rol</option>
+                                            <option value="user">Usuario</option>
+                                            <option value="mod">Moderador</option>
+                                            <option value="admin">Administrador</option>
+                                        </Form.Select>
+                                    </Form.Group>
+                                </Form >
+                                <br />
                                 <div className="" style={{ display: "flex", justifyContent: "space-evenly" }}>
-                                    <button id="searchUser" className="btn btn-primary text-uppercase "
-                                        id="submitButton">Consultar</button>
-                                    <button id="createUser" className="btn btn-primary text-uppercase "
-                                        id="submitButton">Crear</button>
-                                    <button id="updateUser" className="btn btn-primary text-uppercase "
-                                        id="submitButton">Actualizar</button>
-                                    <button id="deleteUser" className="btn btn-primary text-uppercase "
-                                        id="submitButton">Borrar</button>
+                                    <Button id="searchUser" className="btn btn-primary text-uppercase" block size="lg" onClick={searchNewUser} disabled={!validateSearch()}>
+                                        Consultar
+                                    </Button>
+                                    <Button id="createUser" className="btn btn-primary text-uppercase" block size="lg" onClick={saveNewUser} disabled={!validateCreate()}>
+                                        Crear
+                                    </Button>
+                                    <Button id="updateUser" className="btn btn-primary text-uppercase" block size="lg" onClick={updateNewUser} disabled={!validateUpdate()}>
+                                        Actualizar
+                                    </Button>
+                                    <Button id="deleteUser" className="btn btn-primary text-uppercase" block size="lg" onClick={deleteNewUser} disabled={!validateDelete()}>
+                                        Borrar
+                                    </Button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button id="modal-generated" type="button" style={{ display: "none" }} className="btn btn-primary" onclick='openModal()'>
-                    Launch demo modal
-                </button>
-                <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-modal="true"
-                    role="dialog">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="modal-title"></h5>
-                                <button type="button" className="close" aria-label="Close" onclick="closeModal()">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            <div id="modal-message" className="modal-body">
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" onclick="closeModal()">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="modal-backdrop fade show" id="backdrop" style={{ display: "none" }}></div>
             </main>
-        </React.Fragment>
+        </React.Fragment >
     );
 }
 

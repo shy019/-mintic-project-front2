@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./LoginComponent.css";
 import { getUserMain } from "../../Services/UserService";
-import { AppContext } from "../../Provider/AppProvider";
+import { AppContext } from "../../Providers/AppProvider";
 
 export default function LoginComponent(props) {
     const [usuario, setUsuario] = useState("");

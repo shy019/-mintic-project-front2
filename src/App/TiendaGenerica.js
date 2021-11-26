@@ -16,7 +16,8 @@ import React, { Component } from 'react'
 import { LoginComponent } from "../Components/Login/LoginComponent";
 import { Modal1Component } from '../Components/Modal/Modal1Component';
 import { Modal2Component } from '../Components/Modal/Modal2Component';
-import { AppContext } from '../Provider/AppProvider';
+import { AppContext } from '../Providers/AppProvider';
+import { UserProvider } from '../Providers/UserProvider';
 
 function TiendaGenerica() {
   const {
@@ -33,52 +34,51 @@ function TiendaGenerica() {
     setModalInfo
   } = React.useContext(AppContext);
 
-    return (
-      <React.Fragment>
-        {(userLogged && Object.entries(userLogged).length > 0) && <NavigationComponent />}
-        <HeaderComponent userLogged={userLogged} />
-        {loading && <p>Cargando...</p>}
-        <Router>
-          <Switch>
-            {(Object.entries(userLogged).length < 1 ) &&
-              <Route exact path="/login" ><LoginComponent
-                setOpenModalInfo={setOpenModalInfo}
-                setUserLogger={setUserLogger}
-              />
-              </Route>}
-            <Route path="/inicio" > <PrincipalComponent /></Route>
-            <Route path="/clientes"  > <ClientesComponent /></Route>
-            <Route path="/productos"  > <ProductosComponent /></Route>
-            <Route path="/ventas"  > <VentasComponent /></Route>
-            <Route path="/reportes"  > <ReportesComponent /></Route>
-            <Route path="/provedores"  > <ProveedoresComponent /></Route>
-            <Route path="/usuarios"  >
-              <UsuariosComponent
-                setOpenModal={setOpenModal}
-              />
-            </Route>
-          </Switch>
-        </Router>
-
-        {!!openModal && (
-          <Modal1Component
-            show={openModal}
-            onHide={() => setOpenModal(false)}
-          />
-        )}
-        {!!openModalInfo && (
-          <Modal2Component
-            show={openModalInfo}
-            modalInfo={modalInfo}
-            onHide={() => setOpenModalInfo(false)}
-          />
-        )}
-
-        <FooterComponent
+  return (
+    <React.Fragment>
+      {(userLogged && Object.entries(userLogged).length > 0) && <NavigationComponent />}
+      <HeaderComponent userLogged={userLogged} />
+      {loading && <p>Cargando...</p>}
+      <Router>
+        <Switch>
+          {(Object.entries(userLogged).length < 1) &&
+            <Route exact path="/login" ><LoginComponent
+              setOpenModalInfo={setOpenModalInfo}
+              setUserLogger={setUserLogger}
+            />
+            </Route>}
+          <Route path="/inicio" > <PrincipalComponent /></Route>
+          <Route path="/clientes"  > <ClientesComponent /></Route>
+          <Route path="/productos"  > <ProductosComponent /></Route>
+          <Route path="/ventas"  > <VentasComponent /></Route>
+          <Route path="/reportes"  > <ReportesComponent /></Route>
+          <Route path="/provedores"  > <ProveedoresComponent /></Route>
+          <Route path="/usuarios"  >
+            <UserProvider>
+              <UsuariosComponent />
+            </UserProvider>
+          </Route>
+        </Switch>
+      </Router>
+      {!!openModal && (
+        <Modal1Component
+          show={openModal}
+          onHide={() => setOpenModal(false)}
         />
-      </React.Fragment>
-    );
-  }
+      )}
+      {!!openModalInfo && (
+        <Modal2Component
+          show={openModalInfo}
+          modalInfo={modalInfo}
+          onHide={() => setOpenModalInfo(false)}
+        />
+      )}
+
+      <FooterComponent
+      />
+    </React.Fragment>
+  );
+}
 
 
-  export { TiendaGenerica };
+export { TiendaGenerica };

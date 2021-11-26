@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { AppProvider } from '../Provider/AppProvider';
+import { AppProvider } from '../Providers/AppProvider';
 import { TiendaGenerica } from './TiendaGenerica';
 
 function App() {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AppContext } from '../../Provider/AppProvider';
+import { AppContext } from '../../Providers/AppProvider';
 function NavigationComponent(props) {
     const {
         logOut
