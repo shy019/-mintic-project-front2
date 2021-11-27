@@ -92,7 +92,6 @@ function UserProvider(props) {
             setOpenModalInfo(true);
             setModalInfo("Usuario creado con exito.");
         }).catch((error) => {
-            console.log()
             setSpinner(false);
             setOpenModalTitle("Error");
             setOpenModalInfo(true);

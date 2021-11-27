@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocalStorage } from '../ReactHooks/useLocalStorage';
 import history from '../history';
+import { USER_CONNECTED } from '../Util/Constants';
 
 const AppContext = React.createContext();
 
@@ -9,16 +10,26 @@ function AppProvider(props) {
     const [openModal, setOpenModal] = React.useState(false);
     const [openModalInfo, setOpenModalInfo] = React.useState(false);
     const [modalInfo, setModalInfo] = React.useState("");
-    const [userLogged, setUserLogger] = React.useState({});
+    const [userLogged, setUserLogged] = React.useState({});
     const [openModalTitle, setOpenModalTitle] = React.useState("");
     const [spinner, setSpinner] = React.useState(false);
     const [role, setRole] = React.useState("");
 
     useEffect(() => {
-        if (localStorage.getItem("user") && Object.entries(localStorage.getItem("user")).length > 0) {
-            setUserLogger(JSON.parse(localStorage.getItem("user")));
+        if (USER_CONNECTED && Object.entries(USER_CONNECTED).length > 2) {
+            setUserLogged(JSON.parse(USER_CONNECTED));
+            if (JSON.parse(USER_CONNECTED).roles[0].split("_")[1].startsWith("A")) {
+                setRole("admin");
+            } else if (JSON.parse(USER_CONNECTED).roles[0].split("_")[1].startsWith("M")) {
+                setRole("mod");
+            } else if (JSON.parse(USER_CONNECTED).roles[0].split("_")[1].startsWith("U")) {
+                setRole("user");
+            } else {
+                setRole("");
+            }
         } else {
-            history.push('/login');
+            //window.location.href = "/login";
+            history.push = "/login";
         }
     }, []);
 
@@ -32,7 +43,6 @@ function AppProvider(props) {
     const signin = (userSignin) => {
         setSpinner(true);
         saveUser(userSignin);
-        console.log(userSignin)
         setSpinner(false);
         window.location.href = "/inicio";
         //history.push('/inicio');
@@ -43,7 +53,7 @@ function AppProvider(props) {
         sessionStorage.removeItem("user");
         sessionStorage.clear();
         localStorage.clear();
-        setSpinner(false); 
+        setSpinner(false);
         history.push('/login');
     };
 
@@ -52,7 +62,7 @@ function AppProvider(props) {
             loading,
             error,
             userLogged,
-            setUserLogger,
+            setUserLogged,
             signin,
             logOut,
             openModal,

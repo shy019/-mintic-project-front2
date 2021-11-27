@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import './UsuariosComponent.css'
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { UserContext } from "../../../Providers/UserProvider";
+import { AppContext } from "../../../Providers/AppProvider";
+import history from "../../../history";
 
 function UsuariosComponent(props) {
+
+    useEffect(() => {
+        if (!(role == "admin" || role == "mod")) {
+            window.location.href = "/inicio";
+        }
+    }, []);
+
     const {
         cedula,
         setCedula,
@@ -29,7 +38,9 @@ function UsuariosComponent(props) {
         saveNewUser,
         updateNewUser,
     } = React.useContext(UserContext);
-
+    const {
+        role
+    } = React.useContext(AppContext);
     return (
         <React.Fragment>
             <main className="mb-4">
@@ -79,18 +90,18 @@ function UsuariosComponent(props) {
                                 </Form >
                                 <br />
                                 <div className="ctext-wrap" style={{ display: "flex", justifyContent: "space-evenly" }}>
-                                    <Button id="searchUser" className="first-btn btn btn-primary text-uppercase" block size="lg" onClick={searchNewUser} disabled={!validateSearch()}>
+                                    {(role == "admin" || role == "mod") && <Button id="searchUser" className="first-btn btn btn-primary text-uppercase" block size="lg" onClick={searchNewUser} disabled={!validateSearch()}>
                                         Consultar
-                                    </Button>
-                                    <Button id="createUser" className="btn btn-primary text-uppercase" block size="lg" onClick={saveNewUser} disabled={!validateCreate()}>
+                                    </Button>}
+                                    {(role == "admin" || role == "mod") && <Button id="createUser" className="btn btn-primary text-uppercase" block size="lg" onClick={saveNewUser} disabled={!validateCreate()}>
                                         Crear
-                                    </Button>
-                                    <Button id="updateUser" className="btn btn-primary text-uppercase" block size="lg" onClick={updateNewUser} disabled={!validateUpdate()}>
+                                    </Button>}
+                                    {(role == "admin" || role == "mod") && <Button id="updateUser" className="btn btn-primary text-uppercase" block size="lg" onClick={updateNewUser} disabled={!validateUpdate()}>
                                         Actualizar
-                                    </Button>
-                                    <Button id="deleteUser" className="last-btn btn btn-primary text-uppercase" block size="lg" onClick={deleteNewUser} disabled={!validateDelete()}>
+                                    </Button>}
+                                    {(role == "admin" || role == "mod") && <Button id="deleteUser" className="last-btn btn btn-primary text-uppercase" block size="lg" onClick={deleteNewUser} disabled={!validateDelete()}>
                                         Borrar
-                                    </Button>
+                                    </Button>}
                                 </div>
                             </div>
                         </div>

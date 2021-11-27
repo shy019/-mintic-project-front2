@@ -29,8 +29,8 @@ function HeaderComponent(props) {
                     <div className="row gx-4 gx-lg-5 justify-content-center">
                         <div className="col-md-10 col-lg-8 col-xl-7">
                             <div className="page-heading">
-                                <h1>{(props.userLogged && Object.entries(props.userLogged).length > 0) ? "Bienvenidos" : ""}</h1>
-                                <span className="subheading" id="title-page">{(props.userLogged && Object.entries(props.userLogged).length > 0) ? "Conectado como: " + props.userLogged.name : ""}</span>
+                                <h1>{(props.USER_CONNECTED && Object.entries(props.USER_CONNECTED).length > 0) ? "Bienvenidos" : ""}</h1>
+                                <span className="subheading" id="title-page">{(props.USER_CONNECTED && Object.entries(props.USER_CONNECTED).length > 0) ? "Conectado como: " + props.USER_CONNECTED.name : ""}</span>
                             </div>
                         </div>
                     </div>

@@ -26,15 +26,29 @@ function TiendaGenerica() {
     loading,
     error,
     userLogged,
-    setUserLogger,
     openModal,
     setOpenModal,
     openModalInfo,
     setOpenModalInfo,
     modalInfo,
+    role,
     openModalTitle,
     spinner,
   } = React.useContext(AppContext);
+
+  /*window.addEventListener('load', () => {
+    if (history.location.pathname !== "/login") {
+      console.log(role)
+      setTimeout(() => {
+        if ((role == "admin" || role == "user" || role == "mod")) {
+          console.log("entro")
+        } else {
+        }
+      }, 1000);
+    } else {
+      console.log("estoy en login")
+    }
+  });*/
 
   return (
     <React.Fragment>
@@ -45,7 +59,6 @@ function TiendaGenerica() {
           {(Object.entries(userLogged).length < 1) &&
             <Route exact path="/login" ><LoginComponent
               setOpenModalInfo={setOpenModalInfo}
-              setUserLogger={setUserLogger}
             />
             </Route>}
           {(userLogged && Object.entries(userLogged).length > 0) &&

@@ -220,29 +220,6 @@ function VentasComponent(props) {
                         </div>
                     </div>
                 </div>
-                <div className="modal-backdrop fade show" id="backdrop2" style={{ display: "none" }}></div>
-                <button id="modal-generated" type="button" style={{ display: "none" }} className="btn btn-primary" onclick='openModal()'>
-                    Launch demo modal
-                </button>
-                <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-modal="true"
-                    role="dialog">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="modal-title"></h5>
-                                <button type="button" className="close" aria-label="Close" onclick="closeModal()">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            <div id="modal-message" className="modal-body">
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" onclick="closeModal()">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="modal-backdrop fade show" id="backdrop" style={{ display: "none" }}></div>
             </main>
         </React.Fragment>
     );

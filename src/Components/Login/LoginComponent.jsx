@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import "./LoginComponent.css";
 import { getUserMain } from "../../Services/UserService";
 import { AppContext } from "../../Providers/AppProvider";
+import { USER_CONNECTED } from "../../Util/Constants";
 
 export default function LoginComponent(props) {
     const [usuario, setUsuario] = useState("");
@@ -14,7 +15,7 @@ export default function LoginComponent(props) {
         signin,
         setOpenModalInfo,
         setModalInfo,
-        setUserLogger,
+        setUserLogged,
         setOpenModalTitle
     } = React.useContext(AppContext);
 
@@ -31,7 +32,7 @@ export default function LoginComponent(props) {
             return response.data;
         }).then((res) => {
             signin(res);
-            setUserLogger(localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {});
+            setUserLogged(USER_CONNECTED ? JSON.parse(USER_CONNECTED) : {});
         }).catch((error) => {
             setOpenModalTitle("Error");
             setOpenModalInfo(true);
