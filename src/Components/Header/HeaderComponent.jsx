@@ -1,14 +1,28 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react';
 import video1 from '../../Files/video1.mp4';
 import video2 from '../../Files/video2.mp4';
+import video3 from '../../Files/video3.mp4';
+import video4 from '../../Files/video4.mp4';
 function HeaderComponent(props) {
+
+    const [video, setVideo] = useState(0);
+
+    const urls = [
+        video1,
+        video2,
+        video3,
+        video4,
+    ];
+
+    const handleEnded = (e) => {
+        setVideo(Math.round(Math.random() * (3 - 0)));
+    }
+
     return (
         <React.Fragment>
             <header className="masthead viewport-header">
-                <video id="background-video" loop muted autoPlay id="bgvid">
-                    <source src={video1} type="video/mp4" />
-                    <source src={video2} type="video/mp4" />
-                    Your browser does not support the video tag.
+                <video id="background-video" loop muted autoPlay id="bgvid" onEnded={handleEnded}>
+                    <source src={urls[Math.round(Math.random() * (3 - 0))]} type="video/mp4" />
                 </video>
 
                 <div className="container position-relative px-4 px-lg-5">
