@@ -12,34 +12,35 @@ import { UsuariosComponent } from '../Components/Views/Usuarios/UsuariosComponen
 import { VentasComponent } from '../Components/Views/Ventas/VentasComponent';
 import { ReportesComponent } from '../Components/Views/Reportes/ReportesComponent';
 import { ProveedoresComponent } from '../Components/Views/Proveedores/ProveedoresComponent';
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 import { LoginComponent } from "../Components/Login/LoginComponent";
 import { Modal1Component } from '../Components/Modal/Modal1Component';
 import { Modal2Component } from '../Components/Modal/Modal2Component';
 import { AppContext } from '../Providers/AppProvider';
 import { UserProvider } from '../Providers/UserProvider';
+import { SpinnerComponent } from '../Util/SpinnerComponent';
+import history from '../history';
 
 function TiendaGenerica() {
   const {
     loading,
     error,
     userLogged,
-    signin,
     setUserLogger,
     openModal,
     setOpenModal,
     openModalInfo,
     setOpenModalInfo,
     modalInfo,
-    setModalInfo
+    openModalTitle,
+    spinner,
   } = React.useContext(AppContext);
 
   return (
     <React.Fragment>
       {(userLogged && Object.entries(userLogged).length > 0) && <NavigationComponent />}
       <HeaderComponent userLogged={userLogged} />
-      {loading && <p>Cargando...</p>}
-      <Router>
+      <Router history={history}>
         <Switch>
           {(Object.entries(userLogged).length < 1) &&
             <Route exact path="/login" ><LoginComponent
@@ -47,19 +48,34 @@ function TiendaGenerica() {
               setUserLogger={setUserLogger}
             />
             </Route>}
-          <Route path="/inicio" > <PrincipalComponent /></Route>
-          <Route path="/clientes"  > <ClientesComponent /></Route>
-          <Route path="/productos"  > <ProductosComponent /></Route>
-          <Route path="/ventas"  > <VentasComponent /></Route>
-          <Route path="/reportes"  > <ReportesComponent /></Route>
-          <Route path="/provedores"  > <ProveedoresComponent /></Route>
-          <Route path="/usuarios"  >
-            <UserProvider>
-              <UsuariosComponent />
-            </UserProvider>
-          </Route>
+          {(userLogged && Object.entries(userLogged).length > 0) &&
+            <Route path="/inicio" > <PrincipalComponent /></Route>
+          }
+          {(userLogged && Object.entries(userLogged).length > 0) &&
+            <Route path="/clientes"  > <ClientesComponent /></Route>
+          }
+          {(userLogged && Object.entries(userLogged).length > 0) &&
+            <Route path="/productos"  > <ProductosComponent /></Route>
+          }
+          {(userLogged && Object.entries(userLogged).length > 0) &&
+            <Route path="/ventas"  > <VentasComponent /></Route>
+          }
+          {(userLogged && Object.entries(userLogged).length > 0) &&
+            <Route path="/reportes"  > <ReportesComponent /></Route>
+          }
+          {(userLogged && Object.entries(userLogged).length > 0) &&
+            <Route path="/provedores"  > <ProveedoresComponent /></Route>
+          }
+          {(userLogged && Object.entries(userLogged).length > 0) &&
+            <Route path="/usuarios"  >
+              <UserProvider>
+                <UsuariosComponent />
+              </UserProvider>
+            </Route>
+          }
         </Switch>
       </Router>
+      {!!spinner && (<SpinnerComponent />)}
       {!!openModal && (
         <Modal1Component
           show={openModal}
@@ -68,8 +84,9 @@ function TiendaGenerica() {
       )}
       {!!openModalInfo && (
         <Modal2Component
+          title={openModalTitle}
           show={openModalInfo}
-          modalInfo={modalInfo}
+          modalinfo={modalInfo}
           onHide={() => setOpenModalInfo(false)}
         />
       )}

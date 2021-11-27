@@ -14,7 +14,9 @@ function UserProvider(props) {
     const {
         setOpenModalInfo,
         setModalInfo,
-        setUserLogger
+        setUserLogger,
+        setOpenModalTitle,
+        setSpinner,
     } = React.useContext(AppContext);
 
     const validateSearch = () => {
@@ -34,33 +36,47 @@ function UserProvider(props) {
     }
 
     const searchNewUser = () => {
+        setSpinner(true);
         getUser(cedula).then((response) => {
             return response.data;
         }).then((res) => {
             setUsuario(res.username);
             setNombre(res.name);
             setEmail(res.email);
-            setRol(res.roles[0].split("_")[1].startsWith("A") ? "admin" : res.roles[0].split("_")[1].startsWith("M") ? "mod" : "user")
-            //setOpenModalInfo(true);
-            //setModalInfo(error.response ? error.response.data.message : "Error desconocido.");
+            setRol(res.roles[0].split("_")[1].startsWith("A") ? "admin" : res.roles[0].split("_")[1].startsWith("M") ? "mod" : "user");
+            setSpinner(false);
         }).catch((error) => {
+            setSpinner(false);
+            setOpenModalTitle("Error");
             setOpenModalInfo(true);
             setModalInfo(error.response ? error.response.data.message : "Error desconocido.");
         });
     };
 
     const deleteNewUser = () => {
+        setSpinner(true);
         deleteUser(cedula).then((response) => {
             return response.data;
         }).then((res) => {
-            //
+            setUsuario("");
+            setNombre("");
+            setEmail("");
+            setRol("");
+            setCedula("");
+            setSpinner(false);
+            setOpenModalTitle("Exito");
+            setOpenModalInfo(true);
+            setModalInfo("Usuario eliminado con exito.");
         }).catch((error) => {
+            setSpinner(false);
+            setOpenModalTitle("Error");
             setOpenModalInfo(true);
             setModalInfo(error.response ? error.response.data.message : "Error desconocido.");
         });
     };
 
     const saveNewUser = () => {
+        setSpinner(true);
         saveUser({
             "username": usuario,
             "email": email,
@@ -71,16 +87,21 @@ function UserProvider(props) {
         }).then((response) => {
             return response.data;
         }).then((res) => {
-            console.log(res)
+            setSpinner(false);
+            setOpenModalTitle("Exito");
             setOpenModalInfo(true);
-            //setModalInfo(error.response ? error.response.data.message : "Error desconocido.");
+            setModalInfo("Usuario creado con exito.");
         }).catch((error) => {
+            console.log()
+            setSpinner(false);
+            setOpenModalTitle("Error");
             setOpenModalInfo(true);
-            setModalInfo(error.response ? error.response.data.message : "Error desconocido.");
+            setModalInfo(error.response.data[0] != undefined ? error.response.data[0].message : error.response.data.message);
         });
     };
 
     const updateNewUser = () => {
+        setSpinner(true);
         updateUser({
             "username": usuario,
             "email": email,
@@ -91,9 +112,13 @@ function UserProvider(props) {
         }).then((response) => {
             return response.data;
         }).then((res) => {
+            setSpinner(false);
+            setOpenModalTitle("Exito");
             setOpenModalInfo(true);
-            //setModalInfo(error.response ? error.response.data.message : "Error desconocido.");
+            setModalInfo("Usuario modificado con exito.");
         }).catch((error) => {
+            setSpinner(false);
+            setOpenModalTitle("Error");
             setOpenModalInfo(true);
             setModalInfo(error.response ? error.response.data.message : "Error desconocido.");
         });

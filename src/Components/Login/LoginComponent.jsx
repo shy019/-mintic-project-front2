@@ -14,7 +14,8 @@ export default function LoginComponent(props) {
         signin,
         setOpenModalInfo,
         setModalInfo,
-        setUserLogger
+        setUserLogger,
+        setOpenModalTitle
     } = React.useContext(AppContext);
 
     function validateForm() {
@@ -32,43 +33,35 @@ export default function LoginComponent(props) {
             signin(res);
             setUserLogger(localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {});
         }).catch((error) => {
+            setOpenModalTitle("Error");
             setOpenModalInfo(true);
-            setModalInfo(error.response.data.message);
+            setModalInfo(error.response ? error.response.data.message : "Error desconocido.");
         });
     }
 
     return (
         <div className="Login">
-            <div class="post-preview" style={{ textAlign: "center", marginTop: "-30px" }}>
-                <h2 class="post-title">Bienvenidos a Smile</h2>
-                <p class="post-meta">
+            <div className="post-preview" style={{ textAlign: "center", marginTop: "-30px" }}>
+                <h2 className="post-title">Bienvenidos a Smile</h2>
+                <p className="post-meta">
                     “Puedes conseguir lo que quieras si vistes para ello”
                 </p>
             </div>
             <br />
             <Form onSubmit={handleSubmit}>
-
-                <div class="form-floating">
-                    <Form.Group size="lg" controlId="usuario">
-                        <Form.Label>Usuario</Form.Label>
-                        <Form.Control
-                            autoFocus
-                            type="text"
-                            value={usuario}
-                            onChange={(e) => setUsuario(e.target.value)}
-                        />
-                    </Form.Group>
+                <div className="form-floating">
+                    <input className="form-control" id="name" type="text"
+                        value={usuario}
+                        onChange={(e) => setUsuario(e.target.value)}
+                        placeholder="Ingresa tu nombre..." />
+                    <label for="name">Usuario</label>
                 </div>
-
-                <div class="form-floating">
-                    <Form.Group size="lg" controlId="password">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </Form.Group>
+                <div className="form-floating">
+                    <input className="form-control" id="password" type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Ingresa tu contraseña..." />
+                    <label for="password">Contraseña</label>
                 </div>
                 <br />
                 <div style={{

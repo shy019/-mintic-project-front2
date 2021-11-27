@@ -12,11 +12,11 @@ function Modal2Component(props) {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Error
+                    {props.title}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h4>{props.modalInfo}</h4>
+                <h4>{props.modalinfo}</h4>
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={props.onHide}>Close</Button>

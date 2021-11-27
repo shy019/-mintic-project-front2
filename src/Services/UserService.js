@@ -5,44 +5,68 @@ import {
 } from '../Util/Constants';
 
 function getUserMain(user) {
-    return axios.post(USER_API_BASE_URL + "/auth/signin", user);
+    try {
+        return axios.post(USER_API_BASE_URL + "/auth/signin", user);
+    } catch (error) {
+        throw error
+    }
 }
 
 function saveUser(user) {
-    return axios.post(
-        USER_API_BASE_URL + "/user",
-        user,
-        CONFIG_TOKEN
-    );
+    try {
+        return axios.post(
+            USER_API_BASE_URL + "/user/",
+            user,
+            CONFIG_TOKEN
+        );
+    } catch (error) {
+        throw error
+    }
 }
 
 function updateUser(user) {
-    return axios.put(
-        USER_API_BASE_URL + "/user",
-        user,
-        CONFIG_TOKEN
-    );
+    try {
+        return axios.put(
+            USER_API_BASE_URL + "/user/",
+            user,
+            CONFIG_TOKEN
+        );
+    } catch (error) {
+        throw error
+    }
 }
 
 function getUser(userId) {
-    return axios.get(
-        USER_API_BASE_URL + `/user/${userId}`,
-        CONFIG_TOKEN
-    );
+    try {
+        return axios.get(
+            USER_API_BASE_URL + `/user/${userId}`,
+            CONFIG_TOKEN
+        );
+    } catch (error) {
+        throw error
+    }
 }
 
 function getAllUsers() {
-    return axios.get(
-        USER_API_BASE_URL + `/user/`,
-        CONFIG_TOKEN
-    );
+    try {
+        return axios.get(
+            USER_API_BASE_URL + `/user/`,
+            CONFIG_TOKEN
+        );
+    } catch (error) {
+        throw error
+    }
 }
 
 function deleteUser(userId) {
-    return axios.delete(
-        USER_API_BASE_URL + `/user/${userId}`,
-        CONFIG_TOKEN
-    );
+    try {
+        return axios.delete(
+            USER_API_BASE_URL + `/user/${userId}`,
+            CONFIG_TOKEN
+        );
+    } catch (error) {
+        throw error
+    }
 }
 
 export { getUserMain, saveUser, getUser, getAllUsers, deleteUser, updateUser };

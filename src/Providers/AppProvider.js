@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocalStorage } from '../ReactHooks/useLocalStorage';
+import history from '../history';
 
 const AppContext = React.createContext();
 
@@ -9,12 +10,15 @@ function AppProvider(props) {
     const [openModalInfo, setOpenModalInfo] = React.useState(false);
     const [modalInfo, setModalInfo] = React.useState("");
     const [userLogged, setUserLogger] = React.useState({});
-
-   
+    const [openModalTitle, setOpenModalTitle] = React.useState("");
+    const [spinner, setSpinner] = React.useState(false);
+    const [role, setRole] = React.useState("");
 
     useEffect(() => {
         if (localStorage.getItem("user") && Object.entries(localStorage.getItem("user")).length > 0) {
             setUserLogger(JSON.parse(localStorage.getItem("user")));
+        } else {
+            history.push('/login');
         }
     }, []);
 
@@ -26,15 +30,21 @@ function AppProvider(props) {
     } = useLocalStorage('user', "");
 
     const signin = (userSignin) => {
+        setSpinner(true);
         saveUser(userSignin);
+        console.log(userSignin)
+        setSpinner(false);
         window.location.href = "/inicio";
+        //history.push('/inicio');
     };
 
     const logOut = () => {
+        setSpinner(true);
         sessionStorage.removeItem("user");
         sessionStorage.clear();
         localStorage.clear();
-        window.location.href = "/login";
+        setSpinner(false); 
+        history.push('/login');
     };
 
     return (
@@ -50,7 +60,13 @@ function AppProvider(props) {
             openModalInfo,
             setOpenModalInfo,
             modalInfo,
-            setModalInfo
+            setModalInfo,
+            openModalTitle,
+            setOpenModalTitle,
+            spinner,
+            setSpinner,
+            role,
+            setRole
         }}>
             {props.children}
         </AppContext.Provider>
