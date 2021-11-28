@@ -12,7 +12,8 @@ function AppProvider(props) {
     const [modalInfo, setModalInfo] = React.useState("");
     const [userLogged, setUserLogged] = React.useState({});
     const [openModalTitle, setOpenModalTitle] = React.useState("");
-    const [spinner, setSpinner] = React.useState(false);
+    const [spinner, setSpinner] = React.useState(true);
+    const [porcentajeSpinner, setPorcentajeSpinner] = React.useState(0);
     const [role, setRole] = React.useState("");
 
     useEffect(() => {
@@ -41,19 +42,19 @@ function AppProvider(props) {
     } = useLocalStorage('user', "");
 
     const signin = (userSignin) => {
-        setSpinner(true);
         saveUser(userSignin);
-        setSpinner(false);
         window.location.href = "/inicio";
         //history.push('/inicio');
     };
 
     const logOut = () => {
-        setSpinner(true);
+        
+        setPorcentajeSpinner(20);
         sessionStorage.removeItem("user");
         sessionStorage.clear();
         localStorage.clear();
-        setSpinner(false);
+        setPorcentajeSpinner(100);
+        
         history.push('/login');
     };
 
@@ -76,7 +77,9 @@ function AppProvider(props) {
             spinner,
             setSpinner,
             role,
-            setRole
+            setRole,
+            setPorcentajeSpinner,
+            porcentajeSpinner
         }}>
             {props.children}
         </AppContext.Provider>

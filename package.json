@@ -20,6 +20,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
+    "buildwebpack": "webpack --config prod.config.js",
     "start": "set port=8090 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

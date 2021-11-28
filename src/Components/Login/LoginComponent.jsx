@@ -16,7 +16,9 @@ export default function LoginComponent(props) {
         setOpenModalInfo,
         setModalInfo,
         setUserLogged,
-        setOpenModalTitle
+        setOpenModalTitle,
+        setSpinner,
+        setPorcentajeSpinner
     } = React.useContext(AppContext);
 
     function validateForm() {
@@ -24,6 +26,8 @@ export default function LoginComponent(props) {
     }
 
     function handleSubmit(event) {
+        
+        setPorcentajeSpinner(60);
         event.preventDefault();
         getUserMain({
             "username": usuario,
@@ -31,9 +35,13 @@ export default function LoginComponent(props) {
         }).then((response) => {
             return response.data;
         }).then((res) => {
-            signin(res);
+            setPorcentajeSpinner(100);       
             setUserLogged(USER_CONNECTED ? JSON.parse(USER_CONNECTED) : {});
+            signin(res);
+            setPorcentajeSpinner(0);     
         }).catch((error) => {
+            
+            setPorcentajeSpinner(0);     
             setOpenModalTitle("Error");
             setOpenModalInfo(true);
             setModalInfo(error.response ? error.response.data.message : "Error desconocido.");

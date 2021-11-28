@@ -1,6 +1,6 @@
 .loader:empty {
     position: absolute;
-    top: calc(80% - 4em);
+    top: calc(50% - 4em);
     left: calc(50% - 4em);
     width: 6em;
     height: 6em;
@@ -16,3 +16,7 @@
       transform: rotate(360deg);
     }
   }
+
+.loader2 {
+  margin-top: -50px !important;
+}

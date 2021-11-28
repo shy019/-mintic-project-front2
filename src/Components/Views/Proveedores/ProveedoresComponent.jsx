@@ -1,7 +1,37 @@
 import React, { Component } from 'react'
+import Form from "react-bootstrap/Form";
+import './ProveedoresComponent.css'
+import { SupplierContext } from '../../../Providers/SupplierProvider'
 
+import Button from "react-bootstrap/Button";
+import { AppContext } from '../../../Providers/AppProvider';
 
 function ProveedoresComponent(props) {
+
+    const {
+        nitProveedor,
+        setNitProveedor,
+        telefonoProveedor,
+        setTelefonoProveedor,
+        nombreProveedor,
+        setNombreProveedor,
+        ciudadProveedor,
+        setCiudadProveedor,
+        direccionProveedor,
+        setDireccionProveedor,
+        validateSearch,
+        validateCreate,
+        validateDelete,
+        validateUpdate,
+        searchNewSupplier,
+        updateNewSupplier,
+        saveNewSupplier,
+        deleteNewSupplier,
+    } = React.useContext(SupplierContext);
+
+    const {
+        role
+    } = React.useContext(AppContext);
     return (
         <React.Fragment>
             <main className="mb-4">
@@ -9,85 +39,52 @@ function ProveedoresComponent(props) {
                     <div className="row gx-4 gx-lg-5 justify-content-center">
                         <div className="col-md-10 col-lg-8 col-xl-7">
                             <div className="my-5">
-                                <form id="supplierForm" data-sb-form-api-token="API_TOKEN">
+                                <Form>
                                     <div className="form-floating">
-                                        <input className="form-control" id="nitProveedor" type="text"
-                                            placeholder="Ingresa tu NIT..." data-sb-validations="required" />
-                                        <label for="nitProveedor">NIT</label>
-                                        <div className="invalid-feedback" data-sb-feedback="nitProveedor:required">NIT requerido.
-                                        </div>
-                                        <div className="invalid-feedback" data-sb-feedback="nitProveedor:password">No es una NIT
-                                            valido.
-                                        </div>
+                                        <input className="form-control" id="nitProvedor" value={nitProveedor}
+                                            onChange={(e) => setNitProveedor(e.target.value)} type="text"
+                                            placeholder="Ingrese nit del proveedor" />
+                                        <label for="nitProvedor">Nit</label>
                                     </div>
                                     <div className="form-floating">
-                                        <input className="form-control" id="telefonoProveedor" type="text"
-                                            placeholder="Ingresa tu Teléfono..." data-sb-validations="required,password" />
-                                        <label for="telefonoProveedor">Teléfono</label>
-                                        <div className="invalid-feedback" data-sb-feedback="telefonoProveedor:required">Teléfono
-                                            requerido.
-                                        </div>
-                                        <div className="invalid-feedback" data-sb-feedback="telefonoProveedor:password">No es un
-                                            teléfono
-                                            valido.</div>
+                                        <input className="form-control" id="direccion" value={direccionProveedor}
+                                            onChange={(e) => setDireccionProveedor(e.target.value)} type="text"
+                                            placeholder="Ingrese la direccion" />
+                                        <label for="direccion">Direccion</label>
                                     </div>
                                     <div className="form-floating">
-                                        <input className="form-control" id="nombreProveedor" type="text"
-                                            placeholder="Ingresa el Nombre del Proveedor..."
-                                            data-sb-validations="required,password" />
-                                        <label for="nombreProveedor">Nombre Proveedor</label>
-                                        <div className="invalid-feedback" data-sb-feedback="nombreProveedor:required">Un Nombre es
-                                            requerido.</div>
-                                        <div className="invalid-feedback" data-sb-feedback="nombreProveedor:password">No es un
-                                            Nombre valido.</div>
+                                        <input className="form-control" id="telefono" value={telefonoProveedor}
+                                            onChange={(e) => setTelefonoProveedor(e.target.value)} type="text"
+                                            placeholder="Ingrese el telefono" />
+                                        <label for="telefono">Telefono</label>
                                     </div>
                                     <div className="form-floating">
-                                        <input className="form-control" id="ciudadProveedor" type="text"
-                                            placeholder="Ingresa la Ciudad..." data-sb-validations="required,password" />
-                                        <label for="ciudadProveedor">Ciudad</label>
-                                        <div className="invalid-feedback" data-sb-feedback="ciudadProveedor:required">Ciudad
-                                            requerida.</div>
-                                        <div className="invalid-feedback" data-sb-feedback="ciudadProveedor:password">No es un
-                                            Ciudad valida.
-                                        </div>
+                                        <input className="form-control" id="nombreproveedor" value={nombreProveedor}
+                                            onChange={(e) => setNombreProveedor(e.target.value)} type="text"
+                                            placeholder="Ingrese nombre del proveedor" />
+                                        <label for="nombreproveedor">Nombre Proveedor</label>
                                     </div>
                                     <div className="form-floating">
-                                        <input className="form-control" id="direccionProveedor" type="text"
-                                            placeholder="Ingresa tu Dirección..." data-sb-validations="required,password" />
-                                        <label for="direccionProveedor">Dirección</label>
-                                        <div className="invalid-feedback" data-sb-feedback="direccionProveedor:required">Dirección
-                                            requerida.
-                                        </div>
-                                        <div className="invalid-feedback" data-sb-feedback="direccionProveedor:password">No es una
-                                            Dirección
-                                            valida.</div>
+                                        <input className="form-control" id="nombreproveedor" value={ciudadProveedor}
+                                            onChange={(e) => setCiudadProveedor(e.target.value)} type="text"
+                                            placeholder="Ingrese nombre del proveedor" />
+                                        <label for="nombreproveedor">Ciudad</label>
                                     </div>
-                                    <br />
-
-                                    <div className="d-none" id="submitSuccessMessage">
-                                        <div className="text-center mb-3">
-                                            <div className="fw-bolder">Form submission successful!</div>
-                                            To activate this form, sign up at
-                                            <br />
-                                            <a
-                                                href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                                        </div>
-                                    </div>
-
-                                    <div className="d-none" id="submitErrorMessage">
-                                        <div className="text-center text-danger mb-3">Error sending message!</div>
-                                    </div>
-
-                                </form>
-                                <div className="" style={{ display: "flex", justifyContent: "space-evenly" }}>
-                                    <button id="searchUser" className="btn btn-primary text-uppercase "
-                                        id="submitButton">Consultar</button>
-                                    <button id="createUser" className="btn btn-primary text-uppercase "
-                                        id="submitButton">Crear</button>
-                                    <button id="updateUser" className="btn btn-primary text-uppercase "
-                                        id="submitButton">Actualizar</button>
-                                    <button id="deleteUser" className="btn btn-primary text-uppercase "
-                                        id="submitButton">Borrar</button>
+                                </Form >
+                                <br />
+                                <div className="ctext-wrap" style={{ display: "flex", justifyContent: "space-evenly" }}>
+                                    {(role == "admin" || role == "mod") && <Button id="searchSupplier" className="first-btn btn btn-primary text-uppercase" block size="lg" onClick={searchNewSupplier} disabled={!validateSearch()}>
+                                        Consultar
+                                    </Button>}
+                                    {(role == "admin" || role == "mod") && <Button id="createSupplier" className="btn btn-primary text-uppercase" block size="lg" onClick={saveNewSupplier} disabled={!validateCreate()}>
+                                        Crear
+                                    </Button>}
+                                    {(role == "admin" || role == "mod") && <Button id="updateSupplier" className="btn btn-primary text-uppercase" block size="lg" onClick={updateNewSupplier} disabled={!validateUpdate()}>
+                                        Actualizar
+                                    </Button>}
+                                    {(role == "admin" || role == "mod") && <Button id="deleteSupplier" className="last-btn btn btn-primary text-uppercase" block size="lg" onClick={deleteNewSupplier} disabled={!validateDelete()}>
+                                        Borrar
+                                    </Button>}
                                 </div>
                             </div>
                         </div>
@@ -103,7 +100,7 @@ function ProveedoresComponent(props) {
                             <div className="modal-header">
                                 <h5 className="modal-title" id="modal-title"></h5>
                                 <button type="button" className="close" aria-label="Close" onclick="closeModal()">
-                                    <span aria-hidden="true">×</span>
+                                    <span aria-hidden="true">Ã—</span>
                                 </button>
                             </div>
                             <div id="modal-message" className="modal-body">
@@ -116,8 +113,9 @@ function ProveedoresComponent(props) {
                 </div>
                 <div className="modal-backdrop fade show" id="backdrop" style={{ display: "none" }}></div>
             </main>
-        </React.Fragment>
+        </React.Fragment >
     );
+
 }
 
-export { ProveedoresComponent };
+export { ProveedoresComponent }

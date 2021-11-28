@@ -5,40 +5,60 @@ import {
 } from '../Util/Constants';
 
 function saveSupplier(supplier) {
-    return axios.post(
-        USER_API_BASE_URL + "/supplier",
-        supplier,
-        CONFIG_TOKEN
-    );
+    try {
+        return axios.post(
+            USER_API_BASE_URL + "/supplier/",
+            supplier,
+            CONFIG_TOKEN
+        );
+    } catch (error) {
+        throw error
+    }
 }
 
 function updateSupplier(supplier) {
-    return axios.put(
-        USER_API_BASE_URL + "/supplier",
-        supplier,
-        CONFIG_TOKEN
-    );
+    try {
+        return axios.put(
+            USER_API_BASE_URL + "/supplier/",
+            supplier,
+            CONFIG_TOKEN
+        );
+    } catch (error) {
+        throw error
+    }
 }
 
 function getSupplier(supplierId) {
-    return axios.get(
-        USER_API_BASE_URL + `/supplier/${supplierId}`,
-        CONFIG_TOKEN
-    );
+    try {
+        return axios.get(
+            USER_API_BASE_URL + `/supplier/${supplierId}`,
+            CONFIG_TOKEN
+        );
+    } catch (error) {
+        throw error
+    }
 }
 
 function getAllSuppliers() {
-    return axios.get(
-        USER_API_BASE_URL + `/supplier/`,
-        CONFIG_TOKEN
-    );
+    try {
+        return axios.get(
+            USER_API_BASE_URL + `/supplier/`,
+            CONFIG_TOKEN
+        );
+    } catch (error) {
+        throw error
+    }
 }
 
 function deleteSupplier(supplierId) {
-    return axios.delete(
-        USER_API_BASE_URL + `/supplier/${supplierId}`,
-        CONFIG_TOKEN
-    );
+    try {
+        return axios.delete(
+            USER_API_BASE_URL + `/supplier/${supplierId}`,
+            CONFIG_TOKEN
+        );
+    } catch (error) {
+        throw error
+    }
 }
 
 export { saveSupplier, getSupplier, getAllSuppliers, deleteSupplier, updateSupplier };

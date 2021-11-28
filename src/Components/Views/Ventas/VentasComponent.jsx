@@ -186,11 +186,6 @@ function VentasComponent(props) {
                                             <td></td>
                                             <td></td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">5</th>
-                                            <td colspan="2">Larry the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

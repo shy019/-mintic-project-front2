@@ -17,9 +17,11 @@ function UserProvider(props) {
         setUserLogger,
         setOpenModalTitle,
         setSpinner,
+        setPorcentajeSpinner
     } = React.useContext(AppContext);
 
     const validateSearch = () => {
+        console.log(cedula)
         return cedula.length > 7;
     }
 
@@ -36,17 +38,20 @@ function UserProvider(props) {
     }
 
     const searchNewUser = () => {
-        setSpinner(true);
+        
+        setPorcentajeSpinner(60);
         getUser(cedula).then((response) => {
             return response.data;
         }).then((res) => {
+            setPorcentajeSpinner(100);
             setUsuario(res.username);
             setNombre(res.name);
             setEmail(res.email);
             setRol(res.roles[0].split("_")[1].startsWith("A") ? "admin" : res.roles[0].split("_")[1].startsWith("M") ? "mod" : "user");
-            setSpinner(false);
+            setPorcentajeSpinner(0);
         }).catch((error) => {
-            setSpinner(false);
+            
+            setPorcentajeSpinner(0);     
             setOpenModalTitle("Error");
             setOpenModalInfo(true);
             setModalInfo(error.response ? error.response.data.message : "Error desconocido.");
@@ -54,21 +59,25 @@ function UserProvider(props) {
     };
 
     const deleteNewUser = () => {
-        setSpinner(true);
+        
+        setPorcentajeSpinner(60);
         deleteUser(cedula).then((response) => {
             return response.data;
         }).then((res) => {
+            setPorcentajeSpinner(100);
             setUsuario("");
             setNombre("");
             setEmail("");
             setRol("");
             setCedula("");
-            setSpinner(false);
+            
             setOpenModalTitle("Exito");
             setOpenModalInfo(true);
             setModalInfo("Usuario eliminado con exito.");
+            setPorcentajeSpinner(0);
         }).catch((error) => {
-            setSpinner(false);
+            
+            setPorcentajeSpinner(0);     
             setOpenModalTitle("Error");
             setOpenModalInfo(true);
             setModalInfo(error.response ? error.response.data.message : "Error desconocido.");
@@ -76,7 +85,8 @@ function UserProvider(props) {
     };
 
     const saveNewUser = () => {
-        setSpinner(true);
+        
+        setPorcentajeSpinner(60);
         saveUser({
             "username": usuario,
             "email": email,
@@ -85,14 +95,17 @@ function UserProvider(props) {
             "cedula": cedula,
             "password": contraseña
         }).then((response) => {
+            setPorcentajeSpinner(100);
             return response.data;
         }).then((res) => {
-            setSpinner(false);
+            
             setOpenModalTitle("Exito");
             setOpenModalInfo(true);
             setModalInfo("Usuario creado con exito.");
+            setPorcentajeSpinner(0);
         }).catch((error) => {
-            setSpinner(false);
+            
+            setPorcentajeSpinner(0);     
             setOpenModalTitle("Error");
             setOpenModalInfo(true);
             setModalInfo(error.response.data[0] != undefined ? error.response.data[0].message : error.response.data.message);
@@ -100,7 +113,8 @@ function UserProvider(props) {
     };
 
     const updateNewUser = () => {
-        setSpinner(true);
+        
+        setPorcentajeSpinner(60);
         updateUser({
             "username": usuario,
             "email": email,
@@ -109,14 +123,17 @@ function UserProvider(props) {
             "cedula": cedula,
             "password": contraseña
         }).then((response) => {
+            setPorcentajeSpinner(100);
             return response.data;
         }).then((res) => {
-            setSpinner(false);
+            
             setOpenModalTitle("Exito");
             setOpenModalInfo(true);
             setModalInfo("Usuario modificado con exito.");
+            setPorcentajeSpinner(0);
         }).catch((error) => {
-            setSpinner(false);
+            
+            setPorcentajeSpinner(0);     
             setOpenModalTitle("Error");
             setOpenModalInfo(true);
             setModalInfo(error.response ? error.response.data.message : "Error desconocido.");
