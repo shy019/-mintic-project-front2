@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import Carousel from 'react-bootstrap/Carousel'
 
 function PrincipalComponent(props) {
+    
     return (
         <div>
             <main class="mb-4">

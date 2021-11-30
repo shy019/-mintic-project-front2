@@ -20,7 +20,6 @@ function SupplierProvider(props) {
     } = React.useContext(AppContext);
 
     const validateSearch = () => {
-        console.log(nitProveedor)
         return nitProveedor.length > 7;
     }
 

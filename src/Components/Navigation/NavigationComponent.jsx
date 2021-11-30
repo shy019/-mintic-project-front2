@@ -52,7 +52,8 @@ function NavigationComponent(props) {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                         <ul className="navbar-nav mx-auto ms-auto py-4 py-lg-0 " style={{ textAlign: "center" }}>
-                            {(role == "admin" || role == "mod") && <li id="linkUsuarios" className="nav-item"><a className="nav-link px-lg-3 py-3 py-lg-4"
+                            {(role == "admin" || role == "mod") && <li id="linkUsuarios" className="nav-item">
+                                <a className="nav-link px-lg-3 py-3 py-lg-4"
                                 href="#" onClick={usuarios}>Usuarios</a></li>}
                             {(role == "admin" || role == "mod") && <li id="linkClientes" className="nav-item"><a className="nav-link px-lg-3 py-3 py-lg-4"
                                 href="#" onClick={clientes}>Clientes</a></li>}

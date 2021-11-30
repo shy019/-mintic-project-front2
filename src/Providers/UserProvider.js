@@ -21,7 +21,6 @@ function UserProvider(props) {
     } = React.useContext(AppContext);
 
     const validateSearch = () => {
-        console.log(cedula)
         return cedula.length > 7;
     }
 

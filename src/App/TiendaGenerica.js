@@ -1,4 +1,4 @@
-import { BrowserRouter, Router, Route, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter, Router, Route, Switch, Redirect, useHistory } from 'react-router-dom'
 import './App.css';
 import '../index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,11 +18,13 @@ import { Modal2Component } from '../Components/Modal/Modal2Component';
 import { AppContext } from '../Providers/AppProvider';
 import { UserProvider } from '../Providers/UserProvider';
 import { SpinnerComponent } from '../Util/SpinnerComponent';
-import history from '../history';
 import { ReportesComponent } from '../Components/Views/Reportes/ReportesComponent';
 import { SupplierProvider } from '../Providers/SupplierProvider';
+import { ReporteProvider } from '../Providers/Reportes/ReporteProvider';
+import history from '../history';
 
 function TiendaGenerica() {
+  //let history = useHistory();
   const {
     loading,
     error,
@@ -84,7 +86,11 @@ function TiendaGenerica() {
             <Route exact path="/ventas"  > <VentasComponent /></Route>
           }
           {(userLogged && Object.entries(userLogged).length > 0) &&
-            <Route exact path="/reportes"  > <ReportesComponent /></Route>
+            <Route exact path="/reportes"  >
+              <ReporteProvider>
+                <ReportesComponent />
+              </ReporteProvider>
+            </Route>
           }
           {(userLogged && Object.entries(userLogged).length > 0) &&
             <Route exact path="/proveedores"  >

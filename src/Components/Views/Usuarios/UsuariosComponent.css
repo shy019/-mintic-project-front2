@@ -1,30 +1,30 @@
 @media all and (min-width: 480px) {
-    .Login {
-      padding: 60px 0;
-    }
-  
-    .Login form {
-      margin: 0 auto;
-      max-width: 320px;
-    }
-  
+  .Login {
+    padding: 60px 0;
   }
 
-  @media screen and (max-width: 768px) {
+  .Login form {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+
+  .ctext-wrap {
+    flex-direction: column;
+  }
+
+  .btn {
+    margin-bottom: 10px;
+  }
+
+  .first-btn {
+    margin-top: 10px;
+  }
   
-    .ctext-wrap {
-      flex-direction: column;
-    }
-
-    .btn {
-      margin-bottom: 10px;
-    }
-
-    .first-btn {
-      margin-top: 10px;
-    }
-    
-    .last-btn {
-      margin-bottom: -40px;
-    }
+  .last-btn {
+    margin-bottom: -40px;
+  }
 }

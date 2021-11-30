@@ -4,20 +4,11 @@ import {
     CONFIG_TOKEN
 } from '../Util/Constants';
 
-function getUserMain(user) {
+function saveClient(client) {
     try {
-        return axios.post(USER_API_BASE_URL + "/auth/signin", user);
-    } catch (error) {
-        throw error
-    }
-}
-
-function saveUser(user) {
-    try {
-        console.log(user)
         return axios.post(
-            USER_API_BASE_URL + "/user/",
-            user,
+            USER_API_BASE_URL + "/client/",
+            client,
             CONFIG_TOKEN
         );
     } catch (error) {
@@ -25,11 +16,11 @@ function saveUser(user) {
     }
 }
 
-function updateUser(user) {
+function updateClient(client) {
     try {
         return axios.put(
-            USER_API_BASE_URL + "/user/",
-            user,
+            USER_API_BASE_URL + "/client/",
+            client,
             CONFIG_TOKEN
         );
     } catch (error) {
@@ -37,10 +28,10 @@ function updateUser(user) {
     }
 }
 
-function getUser(userId) {
+function getClient(clientId) {
     try {
         return axios.get(
-            USER_API_BASE_URL + `/user/${userId}`,
+            USER_API_BASE_URL + `/client/${clientId}`,
             CONFIG_TOKEN
         );
     } catch (error) {
@@ -48,10 +39,10 @@ function getUser(userId) {
     }
 }
 
-function getAllUsers() {
+function getAllClients() {
     try {
         return axios.get(
-            USER_API_BASE_URL + `/user/`,
+            USER_API_BASE_URL + `/client/`,
             CONFIG_TOKEN
         );
     } catch (error) {
@@ -59,10 +50,10 @@ function getAllUsers() {
     }
 }
 
-function deleteUser(userId) {
+function deleteClient(clientId) {
     try {
         return axios.delete(
-            USER_API_BASE_URL + `/user/${userId}`,
+            USER_API_BASE_URL + `/client/${clientId}`,
             CONFIG_TOKEN
         );
     } catch (error) {
@@ -70,4 +61,4 @@ function deleteUser(userId) {
     }
 }
 
-export { getUserMain, saveUser, getUser, getAllUsers, deleteUser, updateUser };
+export { saveClient, getClient, getAllClients, deleteClient, updateClient };

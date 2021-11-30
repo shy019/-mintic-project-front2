@@ -11,23 +11,36 @@ import Button from "react-bootstrap/Button";
 import { AppContext } from '../../../Providers/AppProvider';
 import history from "../../../history";
 import ReporteComponent from '../../../Util/ReporteComponent';
-import { ReporteClienteProvider } from '../../../Providers/Reportes/ReporteClienteProvider';
+import { ReporteContext } from '../../../Providers/Reportes/ReporteProvider';
 
 function ReportesComponent(props) {
     const {
         role,
-        userLogged
+        userLogged,
+        setPorcentajeSpinner,
     } = React.useContext(AppContext);
 
-    const [spinner, setSpinner] = React.useState(false);
-    const [reportecliente, setReporteCliente] = React.useState(false);
+    const {
+        listaClientes,
+        listaUsuarios,
+        listaVentas
+    } = React.useContext(ReporteContext);
+
     let { path, url } = useRouteMatch();
 
-    const genReporteCliente = () => {
-        setReporteCliente(() => { return true; })
-        console.log(url)
-        history.push = `${url}/reporteclientes`;
+    const reporteUsuarios = () => {
+        setPorcentajeSpinner(65);
+        setPorcentajeSpinner(0);
+    }
 
+    const reporteClientes = () => {
+        setPorcentajeSpinner(65);
+        setPorcentajeSpinner(0);
+    }
+
+    const reporteVentas = () => {
+        setPorcentajeSpinner(65);
+        setPorcentajeSpinner(0);
     }
 
     return (
@@ -42,22 +55,30 @@ function ReportesComponent(props) {
                                         <Switch>
                                             {(userLogged && Object.entries(userLogged).length > 0) &&
                                                 <Route exact path={path}  >
-                                                    {(role == "admin" || role == "mod") && <Button style={{ Margin: "10px", marginBottom: "10px" }} id="reporteUsuarios" className="first-btn btn btn-primary text-uppercase" block size="lg" onClick={genReporteCliente}>
-                                                        <Link className="btn-primary" style={{ textDecoration: "none" }} to={`${url}/reporteclientes`}>Listado de Usuarios</Link>
+                                                    {(role == "admin" || role == "mod") && <Button style={{ Margin: "10px", marginBottom: "10px" }} id="reporteUsuarios" className="first-btn btn btn-primary text-uppercase" block size="lg" onClick={reporteUsuarios}>
+                                                        <Link className="btn-primary" style={{ textDecoration: "none" }} to={{ pathname: `${url}/reporteusuarios`, state: {} }}>Listado de Usuarios</Link>
                                                     </Button>}
-                                                    {(role == "admin" || role == "mod") && <Button style={{ Margin: "10px", marginBottom: "10px" }} id="reporteClientes" className="btn btn-primary text-uppercase" block size="lg">
-                                                        <Link className="btn-primary" style={{ textDecoration: "none" }} to={`${url}/reportelistacliente`}>Listado de Clientes</Link>
+                                                    {(role == "admin" || role == "mod") && <Button style={{ Margin: "10px", marginBottom: "10px" }} id="reporteClientes" className="btn btn-primary text-uppercase" block size="lg" onClick={reporteClientes}>
+                                                        <Link className="btn-primary" style={{ textDecoration: "none" }} to={{ pathname: `${url}/reportelistacliente`, state: { listaClientes } }}>Listado de Clientes</Link>
                                                     </Button>}
-                                                    {(role == "admin" || role == "mod") && <Button style={{ Margin: "10px" }} id="reporteVentas" className="btn btn-primary text-uppercase" block size="lg">
+                                                    {(role == "admin" || role == "mod") && <Button style={{ Margin: "10px" }} id="reporteVentas" className="btn btn-primary text-uppercase" block size="lg" onClick={reporteVentas}>
                                                         <Link className="btn-primary" style={{ textDecoration: "none" }} to={`${url}/reporteventas`}>Ventas por Cliente</Link>
                                                     </Button>}
                                                 </Route>
                                             }
                                             {(userLogged && Object.entries(userLogged).length > 0) &&
-                                                <Route exact path={`${path}/reporteclientes`}  >
-                                                    <ReporteClienteProvider>
-                                                        <ReporteComponent />
-                                                    </ReporteClienteProvider>
+                                                <Route exact path={`${path}/reporteusuarios`} >
+                                                    <ReporteComponent lista={listaUsuarios} />
+                                                </Route>
+                                            }
+                                            {(userLogged && Object.entries(userLogged).length > 0) &&
+                                                <Route exact path={`${path}/reportelistacliente`}>
+                                                    <ReporteComponent lista={listaClientes} />
+                                                </Route>
+                                            }
+                                            {(userLogged && Object.entries(userLogged).length > 0) &&
+                                                <Route exact path={`${path}/reporteventas`}  >
+                                                    <ReporteComponent lista={listaVentas} />
                                                 </Route>
                                             }
                                         </Switch>
@@ -74,3 +95,5 @@ function ReportesComponent(props) {
 }
 
 export { ReportesComponent };
+
+

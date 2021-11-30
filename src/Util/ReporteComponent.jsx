@@ -1,52 +1,17 @@
 import React from "react";
 import "./ReporteComponent.css";
 
-export default class ReporteComponent extends React.Component {
-  state = {
-    columns: [],
-    columnsToHide: ["_id"],
-    results: [
-      {
-        _id: 1,
-        firstname: "Robert",
-        lastname: "Redfort",
-        city: "New York",
-        zip: 1233,
-        street: "Mahn Street",
-        street_number: "24A",
-        favoriteKebab: "cow"
-      },
-      {
-        _id: 2,
-        firstname: "Patty",
-        lastname: "Koulou",
-        city: "Los Angeles",
-        zip: 5654,
-        street: "Av 5th Central",
-        street_number: 12
-      },
-      {
-        _id: 3,
-        firstname: "Matt",
-        lastname: "Michiolo",
-        city: "Chicago",
-        zip: 43452,
-        street: "Saint Usk St",
-        street_number: 65,
-        phoneNumber: "0321454545"
-      },
-      {
-        _id: 4,
-        firstname: "Sonia",
-        lastname: "Remontada",
-        city: "Buenos Aires",
-        zip: "43N95D",
-        street: "Viva la Revolution Paso",
-        street_number: 5446,
-        country: "Argentina"
-      }
-    ]
-  };
+export default class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      columns: [],
+      columnsToHide: ["_id"],
+      results: this.props.lista
+    };
+  }
+
   componentDidMount() {
     this.mappDynamicColumns();
   }
@@ -63,6 +28,13 @@ export default class ReporteComponent extends React.Component {
     });
   };
 
+  verificarRol = (dato) => {
+    if (Array.isArray(dato)) {
+      let data = dato[0].split("_")[1].startsWith("A") ? "Administrador" : dato[0].split("_")[1].startsWith("M") ? "Moderador" : "Usuario";
+      return data;
+    }
+  }
+
   addTableRow = (result) => {
     let row = [];
     this.state.columns.forEach((col) => {
@@ -70,6 +42,9 @@ export default class ReporteComponent extends React.Component {
         row.push(
           Object.keys(result).map((item) => {
             if (result[item] && item === col) {
+              if (Array.isArray(result[item])) {
+                return this.verificarRol(result[item])
+              }
               return result[item];
             } else if (item === col) {
               return "No Value";
@@ -81,7 +56,6 @@ export default class ReporteComponent extends React.Component {
     });
 
     return row.map((item, index) => {
-      // console.log(item, "item ?");
       return (
         <td
           key={`${item}--${index}`}
@@ -92,11 +66,16 @@ export default class ReporteComponent extends React.Component {
       );
     });
   };
+  capitalizarPrimeraLetra = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 
   mapTableColumns = () => {
     return this.state.columns.map((col) => {
       if (!this.state.columnsToHide.includes(col)) {
-        const overridedColumnName = this.overrideColumnName(col);
+
+        let overridedColumnName = this.overrideColumnName(col);
+        overridedColumnName = this.capitalizarPrimeraLetra(overridedColumnName);
         return (
           <th
             key={col}
@@ -128,10 +107,24 @@ export default class ReporteComponent extends React.Component {
 
   overrideColumnName = (colName) => {
     switch (colName) {
-      case "phoneNumber":
-        return "Phone number";
-      case "lastname":
-        return "Custom Last Name";
+      case "name":
+        return "Nombre";
+      case "email":
+        return "Correo Electrónico";
+      case "username":
+        return "Usuario";
+      case "roles":
+        return "rol";
+      case "cedulaCliente":
+        return "Cedula";
+      case "nombreCliente":
+        return "Nombre ";
+      case "direccionCliente":
+        return "Dirección";
+      case "telefonoCliente":
+        return "Teléfono";
+      case "emailCliente":
+        return "Correo Electrónico";
       default:
         return colName;
     }
@@ -139,7 +132,7 @@ export default class ReporteComponent extends React.Component {
 
   createTable = (results) => {
     return (
-      <table class="min-w-full divide-y divide-gray-200">
+      <table class="table">
         <thead>
           <tr>{this.mapTableColumns()}</tr>
         </thead>
@@ -154,19 +147,11 @@ export default class ReporteComponent extends React.Component {
 
   render() {
     return (
-      <div class="flex flex-col">
-        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              {this.state.results.length ? (
-                <div className="card">
-                  {this.createTable(this.state.results)}
-                </div>
-              ) : null}
-            </div>
-          </div>
+      this.state.results.length ? (
+        <div className="">
+          {this.createTable(this.state.results)}
         </div>
-      </div>
+      ) : null
     );
   }
 }

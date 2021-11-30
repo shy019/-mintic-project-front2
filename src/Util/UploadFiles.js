@@ -1,65 +1,89 @@
 import React, { Component } from "react";
 import Dropzone from "react-dropzone";
-import UploadFilesService from "../Services/UploadFilesService";
-
+import { saveProducts } from "../Services/ProductService";
 
 export default class UploadFiles extends Component {
   constructor(props) {
     super(props);
     this.upload = this.upload.bind(this);
     this.onDrop = this.onDrop.bind(this);
-
     this.state = {
       selectedFiles: undefined,
-      currentFile: undefined,
       progress: 0,
       message: "",
       fileInfos: [],
     };
   }
-
-  componentDidMount() {
-    UploadFilesService.getFiles().then((response) => {
+  validarArchivo(file) {
+    if (file && (file.name.split(".")[1] === "csv" || file.name.split(".")[1] === "xlsx" || file.name.split(".")[1] === "txt")) {
+      this.readFile(file);
+    } else {
       this.setState({
-        fileInfos: response.data,
+        progress: 0,
+        message: "Formato no válido!",
       });
-    });
+    }
   }
 
-  upload() {
-    let currentFile = this.state.selectedFiles[0];
+  readFile(file) {
+    try {
+      const reader = new FileReader();
+      var arrayTemporal = [];
+      var listaAEnviar = [];
+      reader.onload = function () {
+        arrayTemporal = reader.result.split("\r\n");
+        arrayTemporal.pop()
+        for (let element in arrayTemporal) {
+          element = arrayTemporal[element].split(",");
+          if (element.length > 3) {
+            var objetoALlenar = {
+              "codigoProducto" : Number.parseInt(element[0]),
+              "ivaCompra" : Number.parseFloat(element[1]),
+              "nombreProducto" : element[2],
+              "precioCompra" : Number.parseInt(element[3]),
+              "precioVenta" : Number.parseInt(element[4]),
+              "nitProveedor" : Number.parseInt(element[5]),
+            };
+            listaAEnviar.push(objetoALlenar);
+          }
+        }
+      }
+      console.log(listaAEnviar)
+      reader.readAsText(file);
+      this.enviarProducto(reader);
+    } catch (error) {
+      this.setState({
+        progress: 0,
+        message: "El archivo no cuenta con el formato requerido!",
+      });
+    }
+  }
 
-    this.setState({
-      progress: 0,
-      currentFile: currentFile,
-    });
-
-    UploadFilesService.upload(currentFile, (event) => {
+  enviarProducto(listaAEnviar) {
+    saveProducts(listaAEnviar, (event) => {
       this.setState({
         progress: Math.round((100 * event.loaded) / event.total),
       });
+    }).then((response) => {
+      console.log(response)
+      this.setState({
+        message: response.data.message,
+      });
     })
-      .then((response) => {
-        this.setState({
-          message: response.data.message,
-        });
-        return UploadFilesService.getFiles();
-      })
-      .then((files) => {
-        this.setState({
-          fileInfos: files.data,
-        });
-      })
       .catch(() => {
         this.setState({
           progress: 0,
           message: "No se pudo subir el archivo!",
-          currentFile: undefined,
         });
       });
+  }
 
+  upload() {
+    let currentFile = this.state.selectedFiles[0];
+    this.validarArchivo(currentFile)
     this.setState({
-      selectedFiles: undefined,
+      progress: 0,
+      currentFile: currentFile,
     });
   }
 
@@ -119,18 +143,6 @@ export default class UploadFiles extends Component {
           {message}
         </div>
 
-        {fileInfos.length > 0 && (
-          <div className="card">
-            <div className="card-header">Lista de Archivos</div>
-            <ul className="list-group list-group-flush">
-              {fileInfos.map((file, index) => (
-                <li className="list-group-item" key={index}>
-                  <a href={file.url}>{file.name}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
     );
   }
