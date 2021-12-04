@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { getUser, saveUser, updateUser, deleteUser } from "../Services/UserService";
 import { AppContext } from "./AppProvider";
 
@@ -14,9 +14,7 @@ function UserProvider(props) {
     const {
         setOpenModalInfo,
         setModalInfo,
-        setUserLogger,
         setOpenModalTitle,
-        setSpinner,
         setPorcentajeSpinner
     } = React.useContext(AppContext);
 
@@ -37,7 +35,7 @@ function UserProvider(props) {
     }
 
     const searchNewUser = () => {
-        
+
         setPorcentajeSpinner(60);
         getUser(cedula).then((response) => {
             return response.data;
@@ -49,8 +47,8 @@ function UserProvider(props) {
             setRol(res.roles[0].split("_")[1].startsWith("A") ? "admin" : res.roles[0].split("_")[1].startsWith("M") ? "mod" : "user");
             setPorcentajeSpinner(0);
         }).catch((error) => {
-            
-            setPorcentajeSpinner(0);     
+
+            setPorcentajeSpinner(0);
             setOpenModalTitle("Error");
             setOpenModalInfo(true);
             setModalInfo(error.response ? error.response.data.message : "Error desconocido.");
@@ -58,7 +56,7 @@ function UserProvider(props) {
     };
 
     const deleteNewUser = () => {
-        
+
         setPorcentajeSpinner(60);
         deleteUser(cedula).then((response) => {
             return response.data;
@@ -69,14 +67,14 @@ function UserProvider(props) {
             setEmail("");
             setRol("");
             setCedula("");
-            
+
             setOpenModalTitle("Exito");
             setOpenModalInfo(true);
             setModalInfo("Usuario eliminado con exito.");
             setPorcentajeSpinner(0);
         }).catch((error) => {
-            
-            setPorcentajeSpinner(0);     
+
+            setPorcentajeSpinner(0);
             setOpenModalTitle("Error");
             setOpenModalInfo(true);
             setModalInfo(error.response ? error.response.data.message : "Error desconocido.");
@@ -84,7 +82,7 @@ function UserProvider(props) {
     };
 
     const saveNewUser = () => {
-        
+
         setPorcentajeSpinner(60);
         saveUser({
             "username": usuario,
@@ -97,22 +95,22 @@ function UserProvider(props) {
             setPorcentajeSpinner(100);
             return response.data;
         }).then((res) => {
-            
+
             setOpenModalTitle("Exito");
             setOpenModalInfo(true);
             setModalInfo("Usuario creado con exito.");
             setPorcentajeSpinner(0);
         }).catch((error) => {
-            
-            setPorcentajeSpinner(0);     
+
+            setPorcentajeSpinner(0);
             setOpenModalTitle("Error");
             setOpenModalInfo(true);
-            setModalInfo(error.response.data[0] != undefined ? error.response.data[0].message : error.response.data.message);
+            setModalInfo(error.response.data[0] !== undefined ? error.response.data[0].message : error.response.data.message);
         });
     };
 
     const updateNewUser = () => {
-        
+
         setPorcentajeSpinner(60);
         updateUser({
             "username": usuario,
@@ -125,14 +123,14 @@ function UserProvider(props) {
             setPorcentajeSpinner(100);
             return response.data;
         }).then((res) => {
-            
+
             setOpenModalTitle("Exito");
             setOpenModalInfo(true);
             setModalInfo("Usuario modificado con exito.");
             setPorcentajeSpinner(0);
         }).catch((error) => {
-            
-            setPorcentajeSpinner(0);     
+
+            setPorcentajeSpinner(0);
             setOpenModalTitle("Error");
             setOpenModalInfo(true);
             setModalInfo(error.response ? error.response.data.message : "Error desconocido.");

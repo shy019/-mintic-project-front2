@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useLocalStorage } from '../ReactHooks/useLocalStorage';
 import history from '../history';
 import { USER_CONNECTED } from '../Util/Constants';
@@ -15,6 +15,7 @@ function AppProvider(props) {
     const [spinner, setSpinner] = React.useState(true);
     const [porcentajeSpinner, setPorcentajeSpinner] = React.useState(0);
     const [role, setRole] = React.useState("");
+    const [modalMap, setModalMap] = React.useState(false);
 
     useEffect(() => {
         if (USER_CONNECTED && Object.entries(USER_CONNECTED).length > 2) {
@@ -34,6 +35,10 @@ function AppProvider(props) {
         }
     }, []);
 
+    const openModalMap = () => {
+        setModalMap(!modalMap);
+    }
+
     const {
         item: user,
         saveItem: saveUser,
@@ -48,13 +53,13 @@ function AppProvider(props) {
     };
 
     const logOut = () => {
-        
+
         setPorcentajeSpinner(20);
         sessionStorage.removeItem("user");
         sessionStorage.clear();
         localStorage.clear();
         setPorcentajeSpinner(100);
-        
+
         history.push('/login');
     };
 
@@ -79,7 +84,9 @@ function AppProvider(props) {
             role,
             setRole,
             setPorcentajeSpinner,
-            porcentajeSpinner
+            porcentajeSpinner,
+            openModalMap,
+            modalMap,
         }}>
             {props.children}
         </AppContext.Provider>

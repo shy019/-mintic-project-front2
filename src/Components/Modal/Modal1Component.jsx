@@ -1,30 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from 'react-bootstrap/Modal'
 import { Button } from 'react-bootstrap';
+import { SaleContext } from "../../Providers/SaleProvider";
 
-function Modal1Component({ children }) {
+function Modal1Component(props) {
   const [show, setShow] = useState(false);
-
+  useEffect(() => {
+    setShow(props.show);
+  }, []);
+  const {
+    aceptarCompra,
+    consecutive,
+  } = React.useContext(SaleContext);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered show={show}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Consecutivo #TG-${consecutive}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>{props.message}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Cerrar
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
+          <Button variant="primary" onClick={aceptarCompra}>
+            Confirmar
           </Button>
         </Modal.Footer>
       </Modal>

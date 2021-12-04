@@ -3,10 +3,12 @@ import Dropzone from "react-dropzone";
 import { saveProducts } from "../Services/ProductService";
 
 export default class UploadFiles extends Component {
+
   constructor(props) {
     super(props);
     this.upload = this.upload.bind(this);
     this.onDrop = this.onDrop.bind(this);
+    this.readFile = this.readFile.bind(this);
     this.state = {
       selectedFiles: undefined,
       progress: 0,
@@ -27,30 +29,33 @@ export default class UploadFiles extends Component {
 
   readFile(file) {
     try {
-      const reader = new FileReader();
       var arrayTemporal = [];
-      var listaAEnviar = [];
-      reader.onload = function () {
+      var listaAEnviar = new Array();
+      const reader = new FileReader();
+      reader.onload = () => {
         arrayTemporal = reader.result.split("\r\n");
         arrayTemporal.pop()
-        for (let element in arrayTemporal) {
-          element = arrayTemporal[element].split(",");
-          if (element.length > 3) {
-            var objetoALlenar = {
-              "codigoProducto" : Number.parseInt(element[0]),
-              "ivaCompra" : Number.parseFloat(element[1]),
-              "nombreProducto" : element[2],
-              "precioCompra" : Number.parseInt(element[3]),
-              "precioVenta" : Number.parseInt(element[4]),
-              "nitProveedor" : Number.parseInt(element[5]),
+        for (let element = 0; element < arrayTemporal.length; element++) {
+          let element2 = arrayTemporal[element].split(",");
+          if (element2.length > 3) {
+            let temporal = {
+              "codigoProducto": Number.parseInt(element2[0]),
+              "ivaCompra": Number.parseFloat(element2[1]),
+              "nombreProducto": element2[2],
+              "precioCompra": Number.parseInt(element2[3]),
+              "precioVenta": Number.parseInt(element2[4]),
+              "nitProveedor": Number.parseInt(element2[5]),
             };
-            listaAEnviar.push(objetoALlenar);
+            listaAEnviar.push(temporal);
           }
         }
-      }
-      console.log(listaAEnviar)
+        this.enviarProducto(listaAEnviar);
+        /*
+        saveProducts(listaAEnviar).then((res) => {
+          localStorage.setItem("message", JSON.stringify(res));
+        })*/
+      };
       reader.readAsText(file);
-      this.enviarProducto(reader);
     } catch (error) {
       this.setState({
         progress: 0,
@@ -65,26 +70,32 @@ export default class UploadFiles extends Component {
         progress: Math.round((100 * event.loaded) / event.total),
       });
     }).then((response) => {
-      console.log(response)
       this.setState({
-        message: response.data.message,
+        progress: 0,
+        selectedFiles: undefined,
+        message: response.data.mensaje,
+        currentFile: undefined
       });
     })
       .catch(() => {
         this.setState({
+          selectedFiles: undefined,
           progress: 0,
           message: "No se pudo subir el archivo!",
         });
       });
+    this.setState({
+      selectedFiles: undefined,
+      progress: 0,
+    });
   }
 
   upload() {
     let currentFile = this.state.selectedFiles[0];
-    this.validarArchivo(currentFile)
     this.setState({
-      progress: 0,
-      currentFile: currentFile,
+      progress: 60
     });
+    this.validarArchivo(currentFile)
   }
 
   onDrop(files) {
@@ -94,7 +105,7 @@ export default class UploadFiles extends Component {
   }
 
   render() {
-    const { selectedFiles, currentFile, progress, message, fileInfos } = this.state;
+    const { selectedFiles, currentFile, progress, message } = this.state;
 
     return (
       <div>

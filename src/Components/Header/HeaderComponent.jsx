@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import video1 from '../../Files/video1.mp4';
 import video2 from '../../Files/video2.mp4';
 import video3 from '../../Files/video3.mp4';
@@ -21,7 +21,7 @@ function HeaderComponent(props) {
     return (
         <React.Fragment>
             <header className="masthead viewport-header">
-                <video id="background-video" loop muted autoPlay id="bgvid" onEnded={handleEnded}>
+                <video id="background-video bgvid" loop muted autoPlay onEnded={handleEnded}>
                     <source src={urls[Math.round(Math.random() * (3 - 0))]} type="video/mp4" />
                 </video>
 

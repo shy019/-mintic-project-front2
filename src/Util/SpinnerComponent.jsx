@@ -1,11 +1,9 @@
-import React, { Component, useContext } from 'react'
-import Spinner from 'react-bootstrap/Spinner'
+import React from 'react'
 import './SpinnerComponent.css'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import { AppContext } from '../Providers/AppProvider';
 
 export function SpinnerComponent(props) {
-    
     const {
         porcentajeSpinner
     } = React.useContext(AppContext);

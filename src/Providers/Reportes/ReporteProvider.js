@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useLocalStorage } from '../../ReactHooks/useLocalStorage';
-import history from '../../history';
-import { USER_CONNECTED } from '../../Util/Constants';
 import { getAllUsers } from '../../Services/UserService';
 import { getAllClients } from '../../Services/ClientService';
 import { AppContext } from '../AppProvider';

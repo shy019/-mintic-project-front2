@@ -1,7 +1,6 @@
-import React, { Component, useState } from 'react';
+import React from 'react';
 import {
     BrowserRouter,
-    Router,
     Route,
     Switch,
     useRouteMatch,
@@ -55,13 +54,13 @@ function ReportesComponent(props) {
                                         <Switch>
                                             {(userLogged && Object.entries(userLogged).length > 0) &&
                                                 <Route exact path={path}  >
-                                                    {(role == "admin" || role == "mod") && <Button style={{ Margin: "10px", marginBottom: "10px" }} id="reporteUsuarios" className="first-btn btn btn-primary text-uppercase" block size="lg" onClick={reporteUsuarios}>
+                                                    {(role === "admin" || role === "mod") && <Button style={{ Margin: "10px", marginBottom: "10px" }} id="reporteUsuarios" className="first-btn btn btn-primary text-uppercase" block size="lg" onClick={reporteUsuarios}>
                                                         <Link className="btn-primary" style={{ textDecoration: "none" }} to={{ pathname: `${url}/reporteusuarios`, state: {} }}>Listado de Usuarios</Link>
                                                     </Button>}
-                                                    {(role == "admin" || role == "mod") && <Button style={{ Margin: "10px", marginBottom: "10px" }} id="reporteClientes" className="btn btn-primary text-uppercase" block size="lg" onClick={reporteClientes}>
+                                                    {(role === "admin" || role === "mod") && <Button style={{ Margin: "10px", marginBottom: "10px" }} id="reporteClientes" className="btn btn-primary text-uppercase" block size="lg" onClick={reporteClientes}>
                                                         <Link className="btn-primary" style={{ textDecoration: "none" }} to={{ pathname: `${url}/reportelistacliente`, state: { listaClientes } }}>Listado de Clientes</Link>
                                                     </Button>}
-                                                    {(role == "admin" || role == "mod") && <Button style={{ Margin: "10px" }} id="reporteVentas" className="btn btn-primary text-uppercase" block size="lg" onClick={reporteVentas}>
+                                                    {(role === "admin" || role === "mod") && <Button style={{ Margin: "10px" }} id="reporteVentas" className="btn btn-primary text-uppercase" block size="lg" onClick={reporteVentas}>
                                                         <Link className="btn-primary" style={{ textDecoration: "none" }} to={`${url}/reporteventas`}>Ventas por Cliente</Link>
                                                     </Button>}
                                                 </Route>

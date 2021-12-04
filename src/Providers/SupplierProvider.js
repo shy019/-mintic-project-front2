@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { getAllSuppliers, saveSupplier, updateSupplier, deleteSupplier, getSupplier } from "../Services/SupplierService";
+import React, { useState } from 'react';
+import { saveSupplier, updateSupplier, deleteSupplier, getSupplier } from "../Services/SupplierService";
 import { AppContext } from "./AppProvider";
 
 const SupplierContext = React.createContext();
@@ -10,12 +10,11 @@ function SupplierProvider(props) {
     const [nombreProveedor, setNombreProveedor] = useState("");
     const [ciudadProveedor, setCiudadProveedor] = useState("");
     const [direccionProveedor, setDireccionProveedor] = useState("");
-    
+
     const {
         setOpenModalInfo,
         setModalInfo,
         setOpenModalTitle,
-        setSpinner,
         setPorcentajeSpinner
     } = React.useContext(AppContext);
 
@@ -106,7 +105,7 @@ function SupplierProvider(props) {
             setPorcentajeSpinner(0);
             setOpenModalTitle("Error");
             setOpenModalInfo(true);
-            setModalInfo(error.response.data[0] != undefined ? error.response.data[0].message : error.response.data.message);
+            setModalInfo(error.response.data[0] !== undefined ? error.response.data[0].message : error.response.data.message);
         });
     };
 

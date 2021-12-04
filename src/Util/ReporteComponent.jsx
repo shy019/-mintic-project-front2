@@ -132,7 +132,7 @@ export default class App extends React.Component {
 
   createTable = (results) => {
     return (
-      <table class="table">
+      <table className="table">
         <thead>
           <tr>{this.mapTableColumns()}</tr>
         </thead>

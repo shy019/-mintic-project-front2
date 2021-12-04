@@ -1,8 +1,8 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import UploadFiles from "../../../Util/UploadFiles";
 import './ProductosComponent.css'
 
-function ProductosComponent(props) {
+function ProductosComponent() {
 
     return (
         <React.Fragment>

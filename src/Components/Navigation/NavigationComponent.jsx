@@ -1,11 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { AppContext } from '../../Providers/AppProvider';
 import history from '../../history';
 import './NavigationComponent.css'
-function NavigationComponent(props) {
+import { MdPlace } from 'react-icons/md';
+function NavigationComponent() {
     const {
         logOut,
         role,
+        openModalMap,
+        modalMap,
     } = React.useContext(AppContext);
 
     const inicio = () => {
@@ -42,8 +45,11 @@ function NavigationComponent(props) {
             <nav className="navbar navbar-expand-lg navbar-light  indigo darken-2" id="mainNav">
                 <div className="container px-4 px-lg-5">
                     <div style={{ flex: "none" }}>
-                        <a className="navbar-brand" href="#" onClick={inicio}>Inicio</a>
-                        <a className="navbar-brand" href="login" onClick={logOut}>Salir</a>
+                        <div>
+                            <a className="navbar-brand" href="#" onClick={inicio}>Inicio</a>
+                            <MdPlace style={{ width: "30px", height: "30px", marginRight: "17px" }} onClick={openModalMap} />
+                            <a className="navbar-brand" href="login" onClick={logOut}>Salir</a>
+                        </div>
                     </div>
                     <button className="navbar-toggler third-button" id="third-button" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
@@ -52,18 +58,18 @@ function NavigationComponent(props) {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                         <ul className="navbar-nav mx-auto ms-auto py-4 py-lg-0 " style={{ textAlign: "center" }}>
-                            {(role == "admin" || role == "mod") && <li id="linkUsuarios" className="nav-item">
+                            {(role === "admin" || role === "mod") && <li id="linkUsuarios" className="nav-item">
                                 <a className="nav-link px-lg-3 py-3 py-lg-4"
-                                href="#" onClick={usuarios}>Usuarios</a></li>}
-                            {(role == "admin" || role == "mod") && <li id="linkClientes" className="nav-item"><a className="nav-link px-lg-3 py-3 py-lg-4"
+                                    href="#" onClick={usuarios}>Usuarios</a></li>}
+                            {(role === "admin" || role === "mod") && <li id="linkClientes" className="nav-item"><a className="nav-link px-lg-3 py-3 py-lg-4"
                                 href="#" onClick={clientes}>Clientes</a></li>}
-                            {(role == "admin" || role == "mod") && <li id="linkProveedores" className="nav-item"><a className="nav-link px-lg-3 py-3 py-lg-4"
+                            {(role === "admin" || role === "mod") && <li id="linkProveedores" className="nav-item"><a className="nav-link px-lg-3 py-3 py-lg-4"
                                 href="#" onClick={proveedores}>Proveedores</a></li>}
-                            {(role == "admin" || role == "user" || role == "mod") && <li id="linkProductos" className="nav-item"><a className="nav-link px-lg-3 py-3 py-lg-4"
+                            {(role === "admin" || role === "user" || role === "mod") && <li id="linkProductos" className="nav-item"><a className="nav-link px-lg-3 py-3 py-lg-4"
                                 href="#" onClick={productos}>Productos</a></li>}
-                            {(role == "admin" || role == "mod") && <li id="linkVentas" className="nav-item"><a className="nav-link px-lg-3 py-3 py-lg-4"
+                            {(role === "admin" || role === "mod") && <li id="linkVentas" className="nav-item"><a className="nav-link px-lg-3 py-3 py-lg-4"
                                 href="#" onClick={ventas}>Ventas</a></li>}
-                            {(role == "admin" || role == "user" || role == "mod") && <li id="linkReportes" className="nav-item"><a className="nav-link px-lg-3 py-3 py-lg-4"
+                            {(role === "admin" || role === "user" || role === "mod") && <li id="linkReportes" className="nav-item"><a className="nav-link px-lg-3 py-3 py-lg-4"
                                 href="#" onClick={reportes}>Reportes</a></li>}
                         </ul>
                     </div>

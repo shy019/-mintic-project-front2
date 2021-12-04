@@ -1,4 +1,4 @@
-import { BrowserRouter, Router, Route, Switch, Redirect, useHistory } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import './App.css';
 import '../index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,47 +11,33 @@ import { ProductosComponent } from '../Components/Views/Productos/ProductosCompo
 import { UsuariosComponent } from '../Components/Views/Usuarios/UsuariosComponent';
 import { VentasComponent } from '../Components/Views/Ventas/VentasComponent';
 import { ProveedoresComponent } from '../Components/Views/Proveedores/ProveedoresComponent';
-import React, { Component, useEffect } from 'react'
+import React from 'react'
 import { LoginComponent } from "../Components/Login/LoginComponent";
 import { Modal1Component } from '../Components/Modal/Modal1Component';
 import { Modal2Component } from '../Components/Modal/Modal2Component';
 import { AppContext } from '../Providers/AppProvider';
 import { UserProvider } from '../Providers/UserProvider';
 import { SpinnerComponent } from '../Util/SpinnerComponent';
-import { ReportesComponent } from '../Components/Views/Reportes/ReportesComponent';
 import { SupplierProvider } from '../Providers/SupplierProvider';
-import { ReporteProvider } from '../Providers/Reportes/ReporteProvider';
+import { ClientProvider } from '../Providers/ClientProvider';
 import history from '../history';
+import { SaleProvider } from '../Providers/SaleProvider';
+import { ReporteProvider } from '../Providers/Reportes/ReporteProvider';
+import { ReportesComponent } from '../Components/Views/Reportes/ReportesComponent';
+import { OffCanvasComponent } from '../Util/OffCanvasComponent';
 
 function TiendaGenerica() {
-  //let history = useHistory();
   const {
-    loading,
-    error,
     userLogged,
     openModal,
     setOpenModal,
     openModalInfo,
     setOpenModalInfo,
     modalInfo,
-    role,
     openModalTitle,
-    spinner
+    spinner,
+    modalMap,
   } = React.useContext(AppContext);
-
-  /*window.addEventListener('load', () => {
-    if (history.location.pathname !== "/login") {
-      console.log(role)
-      setTimeout(() => {
-        if ((role == "admin" || role == "user" || role == "mod")) {
-          console.log("entro")
-        } else {
-        }
-      }, 1000);
-    } else {
-      console.log("estoy en login")
-    }
-  });*/
 
   return (
     <React.Fragment>
@@ -77,19 +63,20 @@ function TiendaGenerica() {
             <Route exact path="/inicio" > <PrincipalComponent /></Route>
           }
           {(userLogged && Object.entries(userLogged).length > 0) &&
-            <Route exact path="/clientes"  > <ClientesComponent /></Route>
+            <Route exact path="/clientes"  >
+              <ClientProvider>
+                <ClientesComponent />
+              </ClientProvider>
+            </Route>
           }
           {(userLogged && Object.entries(userLogged).length > 0) &&
             <Route exact path="/productos"  > <ProductosComponent /></Route>
           }
           {(userLogged && Object.entries(userLogged).length > 0) &&
-            <Route exact path="/ventas"  > <VentasComponent /></Route>
-          }
-          {(userLogged && Object.entries(userLogged).length > 0) &&
-            <Route exact path="/reportes"  >
-              <ReporteProvider>
-                <ReportesComponent />
-              </ReporteProvider>
+            <Route exact path="/ventas"  >
+              <SaleProvider>
+                <VentasComponent />
+              </SaleProvider>
             </Route>
           }
           {(userLogged && Object.entries(userLogged).length > 0) &&
@@ -97,6 +84,14 @@ function TiendaGenerica() {
               <SupplierProvider>
                 <ProveedoresComponent />
               </SupplierProvider>
+            </Route>
+          }
+
+          {(userLogged && Object.entries(userLogged).length > 0) &&
+            <Route exact path="/reportes"  >
+              <ReporteProvider>
+                <ReportesComponent />
+              </ReporteProvider>
             </Route>
           }
           {(userLogged && Object.entries(userLogged).length > 0) &&
@@ -109,19 +104,20 @@ function TiendaGenerica() {
         </Switch>
       </BrowserRouter>
       {
-        !!openModal && (
-          <Modal1Component
-            show={openModal}
-            onHide={() => setOpenModal(false)}
-          />
-        )
-      }
-      {
         !!openModalInfo && (
           <Modal2Component
             title={openModalTitle}
             show={openModalInfo}
             modalinfo={modalInfo}
+            onHide={() => setOpenModalInfo(false)}
+          />
+        )
+      }
+      {
+        !!modalMap && (
+          <OffCanvasComponent
+            title={openModalTitle}
+            show={modalMap}
             onHide={() => setOpenModalInfo(false)}
           />
         )

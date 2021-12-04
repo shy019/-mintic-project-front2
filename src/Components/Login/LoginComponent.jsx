@@ -9,7 +9,6 @@ import { USER_CONNECTED } from "../../Util/Constants";
 export default function LoginComponent(props) {
     const [usuario, setUsuario] = useState("");
     const [password, setPassword] = useState("");
-    const passwordRef = React.useRef();
 
     const {
         signin,
@@ -17,7 +16,6 @@ export default function LoginComponent(props) {
         setModalInfo,
         setUserLogged,
         setOpenModalTitle,
-        setSpinner,
         setPorcentajeSpinner
     } = React.useContext(AppContext);
 
@@ -63,14 +61,14 @@ export default function LoginComponent(props) {
                         value={usuario}
                         onChange={(e) => setUsuario(e.target.value)}
                         placeholder="Ingresa tu nombre..." />
-                    <label for="name">Usuario</label>
+                    <label htmlFor="name">Usuario</label>
                 </div>
                 <div className="form-floating">
                     <input className="form-control" id="password" type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Ingresa tu contraseña..." />
-                    <label for="password">Contraseña</label>
+                    <label htmlFor="password">Contraseña</label>
                 </div>
                 <br />
                 <div style={{
