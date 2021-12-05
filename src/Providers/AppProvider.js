@@ -16,6 +16,7 @@ function AppProvider(props) {
     const [porcentajeSpinner, setPorcentajeSpinner] = React.useState(0);
     const [role, setRole] = React.useState("");
     const [modalMap, setModalMap] = React.useState(false);
+    const [title, setTitle] = React.useState("Sucursal");
 
     useEffect(() => {
         if (USER_CONNECTED && Object.entries(USER_CONNECTED).length > 2) {
@@ -38,6 +39,8 @@ function AppProvider(props) {
     const openModalMap = () => {
         setModalMap(!modalMap);
     }
+
+    const setTitleCanvas = (title) => setTitle(title);
 
     const {
         item: user,
@@ -87,6 +90,9 @@ function AppProvider(props) {
             porcentajeSpinner,
             openModalMap,
             modalMap,
+            title,
+            setTitle,
+            setTitleCanvas,
         }}>
             {props.children}
         </AppContext.Provider>

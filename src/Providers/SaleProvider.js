@@ -245,22 +245,23 @@ function SaleProvider(props) {
         ${(((cantidad1 > 0 && nombreProducto1.length > 0)) ? nombreProducto1.length > 0 ? "  " + cantidad1 + " unidades de " + nombreProducto1 + ", " : `` : ``)}
         ${(((cantidad2 > 0 && nombreProducto2.length > 0)) ? nombreProducto2.length > 0 ? "  " + cantidad2 + " unidades de " + nombreProducto2 + ", " : `` : ``)}
         ${(((cantidad3 > 0 && nombreProducto3.length > 0)) ? nombreProducto3.length > 0 ? "  " + cantidad3 + " unidades de " + nombreProducto3 + ", " : `` : ``)}
-        por un monto de ${new Intl.NumberFormat("CO-DC").format(valorTotalVentaConIva)} pesos más IVA.`
+        por un monto de ${new Intl.NumberFormat("CO-DC").format(valorTotalVentaConIva)} pesos IVA incluido.`
         setMessage(texto);
         setOpenModal(true);
     }
 
     const aceptarCompra = () => {
+        console.log(userLogged)
         setOpenModal(false);
         /*
         setPorcentajeSpinner(30);
         saveSale({
-            "cedulaClientes": cliente,
+            "cedulaCliente": cliente,
             "codigoVenta": consecutive,
             "ivaVenta": valorTotalIva,
             "totalVenta": valorTotalVentaConIva,
             "valorVenta": valorTotalVenta,
-            "cedulaUsuario": userLogged
+            "cedulaUsuario": userLogged.id
         }).then((response) => {
             setPorcentajeSpinner(60);
             return response.data;
