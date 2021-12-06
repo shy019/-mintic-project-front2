@@ -16,7 +16,7 @@ function AppProvider(props) {
     const [porcentajeSpinner, setPorcentajeSpinner] = React.useState(0);
     const [role, setRole] = React.useState("");
     const [modalMap, setModalMap] = React.useState(false);
-    const [title, setTitle] = React.useState("Sucursal");
+    const [branch, setBranch] = React.useState("Sucursal");
 
     useEffect(() => {
         if (USER_CONNECTED && Object.entries(USER_CONNECTED).length > 2) {
@@ -34,13 +34,23 @@ function AppProvider(props) {
             //window.location.href = "/login";
             history.push = "/login";
         }
+        if (localStorage.getItem("branch") && localStorage.getItem("user").length > 0) {
+            setBranch(localStorage.getItem("branch") ? JSON.parse(localStorage.getItem("branch")) : null);
+        } else {
+            let branch = { id: "1", nombreSucursal: "Plaza de las Américas", ciudad: "Bogotá" }
+            localStorage.setItem("branch", JSON.stringify(branch));
+            setBranch(localStorage.getItem("branch") ? JSON.parse(localStorage.getItem("branch")) : null);
+        }
     }, []);
 
     const openModalMap = () => {
         setModalMap(!modalMap);
     }
 
-    const setTitleCanvas = (title) => setTitle(title);
+    const setBranchCanvas = (branch) => {
+        localStorage.setItem("branch", JSON.stringify(branch));
+        setBranch(branch);
+    };
 
     const {
         item: user,
@@ -90,9 +100,9 @@ function AppProvider(props) {
             porcentajeSpinner,
             openModalMap,
             modalMap,
-            title,
-            setTitle,
-            setTitleCanvas,
+            branch,
+            setBranch,
+            setBranchCanvas,
         }}>
             {props.children}
         </AppContext.Provider>

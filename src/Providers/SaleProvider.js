@@ -3,6 +3,7 @@ import { getClient } from '../Services/ClientService';
 import { getProduct } from '../Services/ProductService';
 import { getSale, saveSale, updateSale, deleteSale } from "../Services/SaleService";
 import { AppContext } from "./AppProvider";
+import { saveSaleDetail } from "../Services/SaleDetailService";
 
 const SaleContext = React.createContext();
 
@@ -65,6 +66,7 @@ function SaleProvider(props) {
         setPorcentajeSpinner,
         setOpenModal,
         userLogged,
+        branch,
     } = React.useContext(AppContext);
 
     useEffect(() => {
@@ -253,7 +255,7 @@ function SaleProvider(props) {
     const aceptarCompra = () => {
         console.log(userLogged)
         setOpenModal(false);
-        /*
+
         setPorcentajeSpinner(30);
         saveSale({
             "cedulaCliente": cliente,
@@ -261,14 +263,15 @@ function SaleProvider(props) {
             "ivaVenta": valorTotalIva,
             "totalVenta": valorTotalVentaConIva,
             "valorVenta": valorTotalVenta,
-            "cedulaUsuario": userLogged.id
+            "cedulaUsuario": userLogged.id,
+            "sucursal": branch,
         }).then((response) => {
             setPorcentajeSpinner(60);
             return response.data;
         }).then((res) => {
-            setPorcentajeSpinner(100);
+            setPorcentajeSpinner(80);
             let arrayProductos = [];
-            if (producto1 !== null && cantidad1 !== null) {
+            if (producto1 !== null && cantidad1 > 0) {
                 arrayProductos.push({
                     "codigoDetalleVenta": consecutive,
                     "cantidadProducto": cantidad1,
@@ -276,9 +279,10 @@ function SaleProvider(props) {
                     "codigoVenta": res,
                     "valorTotal": valorTotalVenta1,
                     "valorVenta": valorTotalVentaConIva1,
+                    "sucursal": branch,
                 });
             }
-            if (producto2 !== null && cantidad2 !== null) {
+            if (producto2 !== null && cantidad2 > 0) {
                 arrayProductos.push({
                     "codigoDetalleVenta": consecutive,
                     "cantidadProducto": cantidad2,
@@ -286,9 +290,10 @@ function SaleProvider(props) {
                     "codigoVenta": res,
                     "valorTotal": valorTotalVenta2,
                     "valorVenta": valorTotalVentaConIva2,
+                    "sucursal": branch,
                 });
             }
-            if (producto3 !== null && cantidad3 !== null) {
+            if (producto3 !== null && cantidad3 > 0) {
                 arrayProductos.push({
                     "codigoDetalleVenta": consecutive,
                     "cantidadProducto": cantidad3,
@@ -296,25 +301,19 @@ function SaleProvider(props) {
                     "codigoVenta": res,
                     "valorTotal": valorTotalVenta3,
                     "valorVenta": valorTotalVentaConIva3,
+                    "sucursal": branch,
                 });
             }
-            let objFinal = {
-                "arrayProductos": arrayProductos,
-                "totalVenta": valorTotalVenta,
-                "totalIva": valorTotalIva,
-                "totalConIva": valorTotalVentaConIva,
-                "user": userLogged,
-                "cliente": cliente,
-                "ordenCompra": consecutive
-            };
-
-            localStorage.setItem("dataReport", JSON.stringify(objFinal));
-            window.open('../Util/Reporte.html', '_blank');
-
-            setOpenModalTitle("Exito");
-            setOpenModalInfo(true);
-            setModalInfo("Venta ejecutada con exito.");
-            setPorcentajeSpinner(0);
+            console.log(arrayProductos)
+            saveSaleDetail(arrayProductos).then((response) => {
+                setPorcentajeSpinner(100);
+                return response.data;
+            }).then((res) => {
+                setOpenModalTitle("Exito");
+                setOpenModalInfo(true);
+                setModalInfo(res);
+                setPorcentajeSpinner(0);
+            })
         }).catch((error) => {
 
             setPorcentajeSpinner(0);
@@ -322,7 +321,7 @@ function SaleProvider(props) {
             setOpenModalInfo(true);
             setModalInfo(error.response.data[0] !== undefined ? error.response.data[0].message : error.response.data.message);
         });
-*/
+
     }
 
     return (<SaleContext.Provider value={{

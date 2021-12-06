@@ -12,9 +12,9 @@ export function OffCanvasComponent(props) {
     const [show, setShow] = useState(false);
 
     const {
-        setTitle,
-        title,
-        setTitleCanvas
+        setBranch,
+        branch,
+        setBranchCanvas
     } = React.useContext(AppContext);
 
     useEffect(() => {
@@ -28,7 +28,8 @@ export function OffCanvasComponent(props) {
             style={{
                 color: color,
                 backgroundColor: color,
-                height: 2
+                height: 2,
+                marginBottom: "30px",
             }}
         />
     );
@@ -36,7 +37,7 @@ export function OffCanvasComponent(props) {
         <>
             <Offcanvas show={show} onHide={handleClose} >
                 <Offcanvas.Header closeButton>
-                    <Offcanvas.Title><p style={{ color: "rgba(0,0,0,.9)", fontWeight: "800", fontSize: "25px", marginTop: "15px" }}>{title}</p></Offcanvas.Title>
+                    <Offcanvas.Title><p style={{ color: "rgba(0,0,0,.9)", fontWeight: "800", fontSize: "25px", marginTop: "15px" }}>{branch.nombreSucursal}</p></Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body style={{ alignSelf: "center" }}>
                     <Card style={{ width: '18rem', border: "none", textAlign: "center" }}>
@@ -47,7 +48,7 @@ export function OffCanvasComponent(props) {
                                 Sede Principal en Bogotá.
                             </Card.Text>
                             <div className="d-grid gap-2">
-                                <Button className="btn-primary" value="Plaza de las Américas" variant="primary" size="lg" onClick={(e) => setTitleCanvas(e.target.value)}>
+                                <Button className="btn-primary" value="Plaza de las Américas" variant="primary" size="lg" onClick={(e) => setBranchCanvas({ id: "1", nombreSucursal: e.target.value, ciudad: "Bogotá" })}>
                                     Seleccionar
                                 </Button>
                             </div>
@@ -62,7 +63,7 @@ export function OffCanvasComponent(props) {
                                 Sede Principal en Medellín.
                             </Card.Text>
                             <div className="d-grid gap-2">
-                                <Button className="btn-primary" value="Gran Santafé" variant="primary" size="lg" onClick={(e) => setTitleCanvas(e.target.value)}>
+                                <Button className="btn-primary" value="Gran Santafé" variant="primary" size="lg" onClick={(e) => setBranchCanvas({ id: "2", nombreSucursal: e.target.value, ciudad: "Medellín" })}>
                                     Seleccionar
                                 </Button>
                             </div>
@@ -77,7 +78,7 @@ export function OffCanvasComponent(props) {
                                 Sede Principal en Barranquilla.
                             </Card.Text>
                             <div className="d-grid gap-2">
-                                <Button className="btn-primary" value="Buenavista" variant="primary" size="lg" onClick={(e) => setTitleCanvas(e.target.value)}>
+                                <Button className="btn-primary" value="Buenavista" variant="primary" size="lg" onClick={(e) => setBranchCanvas({ id: "3", nombreSucursal: e.target.value, ciudad: "Barranquilla" })}>
                                     Seleccionar
                                 </Button>
                             </div>

@@ -109,7 +109,7 @@ function VentasComponent() {
                                             </td>
                                             <td colSpan={3}>
                                                 <div className="form-floating">
-                                                    <input className="form-control" disabled id="valorTotal1" type="text" value={valorTotal1} />
+                                                    <input className="form-control" disabled id="valorTotal1" type="text" value={new Intl.NumberFormat("CO-DC").format(valorTotal1) + " COP"} />
                                                 </div>
                                             </td>
                                         </tr>
@@ -137,7 +137,7 @@ function VentasComponent() {
                                             </td>
                                             <td colSpan={3}>
                                                 <div className="form-floating">
-                                                    <input className="form-control" disabled id="valorTotal2" type="text" value={valorTotal2} />
+                                                    <input className="form-control" disabled id="valorTotal2" type="text" value={new Intl.NumberFormat("CO-DC").format(valorTotal2) + " COP"} />
                                                 </div>
                                             </td>
                                         </tr>
@@ -165,7 +165,7 @@ function VentasComponent() {
                                             </td>
                                             <td colSpan={3}>
                                                 <div className="form-floating">
-                                                    <input className="form-control" disabled id="valorTotal3" type="text" value={valorTotal3} />
+                                                    <input className="form-control" disabled id="valorTotal3" type="text" value={new Intl.NumberFormat("CO-DC").format(valorTotal3) + " COP"} />
                                                 </div>
                                             </td>
                                         </tr>
