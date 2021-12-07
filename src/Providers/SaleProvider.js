@@ -253,7 +253,6 @@ function SaleProvider(props) {
     }
 
     const aceptarCompra = () => {
-        console.log(userLogged)
         setOpenModal(false);
 
         setPorcentajeSpinner(30);
@@ -304,7 +303,6 @@ function SaleProvider(props) {
                     "sucursal": branch,
                 });
             }
-            console.log(arrayProductos)
             saveSaleDetail(arrayProductos).then((response) => {
                 setPorcentajeSpinner(100);
                 return response.data;

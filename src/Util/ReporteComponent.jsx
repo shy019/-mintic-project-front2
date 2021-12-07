@@ -110,7 +110,7 @@ export default class App extends React.Component {
 
         let overridedColumnName = this.overrideColumnName(col);
         if (typeof col == "object") {
-          Object.keys(col).forEach(dato => this.overrideColumnNameObject(dato)) 
+          Object.keys(col).forEach(dato => this.overrideColumnNameObject(dato))
         }
         overridedColumnName = this.capitalizarPrimeraLetra(overridedColumnName);
         return (
@@ -144,6 +144,14 @@ export default class App extends React.Component {
 
   overrideColumnName = (colName) => {
     switch (colName) {
+      case "CantidadProductosVendidos":
+        return "Productos Vendidos";
+      case "IvaTotalVenta":
+        return "Total Iva Ventas";
+      case "ValorTotalMasIvaVenta":
+        return "Valor Total Más Iva Ventas";
+      case "ValorTotalVenta":
+        return "Valor Total Ventas";
       case "CodigoVenta":
         return "Codigo Venta";
       case "ValorVenta":
@@ -191,7 +199,6 @@ export default class App extends React.Component {
         </thead>
         <tbody>
           {results.map((result, index) => {
-            console.log(this.setearKey(result))
             return <tr key={this.setearKey(result)}>{this.addTableRow(result)}</tr>;
           })}
         </tbody>

@@ -32,6 +32,13 @@ function ReporteProvider(props) {
         });
 
         getAllSalesByBranch(branch).then((res) => {
+            res.data[0] = {
+                "sucursal": res.data[0].sucursal,
+                "cantidadProductosVendidos": res.data[0].cantidadProductosVendidos,
+                "ivaTotalVenta": res.data[0].ivaTotalVenta,
+                "valorTotalVenta": res.data[0].valorTotalVenta,
+                "valorTotalMasIvaVenta": res.data[0].valorTotalMasIvaVenta
+            }
             setListaVentasSucursales(res.data)
         });
 

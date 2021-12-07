@@ -14,7 +14,6 @@ function getUserMain(user) {
 
 function saveUser(user) {
     try {
-        console.log(user)
         return axios.post(
             USER_API_BASE_URL + "/user/",
             user,
